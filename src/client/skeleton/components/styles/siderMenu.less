@@ -1,0 +1,108 @@
+.LK-navigator {
+  min-height: 100%;
+  background-color: var(--component-background);
+  box-shadow: 0px 0px 28px var(--primary-lightener-extra);
+  z-index: 3;
+  transition: all 0.3s;
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 @layout-menu-width;
+  max-width: @layout-menu-width;
+  min-width: @layout-menu-width;
+  width: @layout-menu-width;
+  position: relative;
+  overflow: hidden;
+
+  &.LK-navigator-fixSiderBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  &.LK-navigator-collapsed {
+    flex: 0 0 @layout-menu-collapsed-width;
+    max-width: @layout-menu-collapsed-width;
+    min-width: @layout-menu-collapsed-width;
+    width: @layout-menu-collapsed-width;
+  }
+
+  &.LK-inlineLayout-navigator {
+    &.LK-navigator-fixSiderBar {
+      top: @layout-header-height;
+      height: calc(100vh - 88px);
+      min-height: unset;
+    }
+  }
+
+  &.LK-splitLayout-navigator {
+    z-index: 8;
+  }
+}
+
+.LK-menu {
+  margin-top: @spacing-large;
+  flex: 1;
+  overflow: auto;
+  overflow-x: hidden;
+  border: 0 !important;
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .LK-menuIcon {
+    margin-right: @spacing-normal !important;
+    display: inline-block;
+
+    & > span {
+      margin: 0 !important;
+    }
+  }
+
+  &.LK-menu-horizontal {
+    margin-top: 0;
+    line-height: @layout-header-height;
+    height: @layout-header-height;
+
+    .LK-antd-subMenu-title,
+    .LK-antd-menuItem-title {
+      border: 0 !important;
+      height: 100%;
+      line-height: @layout-header-height;
+      top: 0px !important;
+    }
+
+    .LK-antd-menuItem-title {
+      padding: 0 20px;
+    }
+
+    .LK-antd-subMenu-title {
+      & > div {
+        height: @layout-header-height;
+      }
+    }
+  }
+
+  &.LK-menu-collapsed {
+    .LK-antd-subMenu-title,
+    .LK-antd-menuItem-title {
+      display: inline-block;
+      max-width: 0;
+      opacity: 0;
+    }
+
+    .LK-menuIcon {
+      display: block;
+      min-width: 14px;
+    }
+  }
+
+  // 修复antd，submenu与menuItem动画不一致
+  .LK-antd-subMenu,
+  .LK-antd-menuItem {
+    transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+      border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+      background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+}

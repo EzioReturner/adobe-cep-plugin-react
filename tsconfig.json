@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "baseUrl": "./",
+    "module": "commonjs",
+    "declaration": true,
+    "declarationDir": "lib",
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/client/*"],
+      "@components/*": ["./src/client/components/*"],
+      "@styles/*": ["./src/client/styles/*"],
+      "@utils/*": ["./src/client/utils/*"],
+      "@views/*": ["./src/client/views/*"],
+      "@api/*": ["./src/client/api/*"],
+      "@store/*": ["./src/client/store/*"],
+      "@config/*": ["./src/client/config/*"],
+      "@models/*": ["./src/client/models/*"],
+      "@assets/*": ["./src/client/assets/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./src/client/models/*"]
+  },
+  "include": ["./src/client/**/*.ts", "./src/client/**/*.tsx"],
+  "exclude": ["node_modules", "tests/*"]
+}
