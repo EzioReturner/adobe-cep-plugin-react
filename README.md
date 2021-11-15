@@ -44,36 +44,34 @@ dist
 start with `./pluginrc.js`, this is the plugin config I created, here is an example
 ```javascript
 module.exports = {
-    extensionBundleId: 'com.hendrix.demo',
-    extensionBundleName: 'demo',
-    extensionBundleVersion: '1.0.1',
-    cepVersion: '7.0',
-    panelName: 'hendrix demo',
-    width: '400',
-    height: '600',
-    root: root,
-    sourceFolder: srcFolder,
-    destinationFolder: destFolder,
-    certificate : {
-        customCert: {
-            path: '',
-            password: 'password'
-        },
-        selfSign: {
-            country: 'US',
-            province: 'CA',
-            org: 'org',
-            name: 'name',
-            password: 'password',
-            locality: 'locality',
-            orgUnit: 'orgUnit',
-            email: 'your@email.com',
-            output: certPath
-        }
-
+  extensionBundleId: 'com.react.ps.plugin',
+  extensionBundleName: 'react.ps.plugin',
+  extensionBundleVersion: '1.0.1',
+  cepVersion: '7.0',
+  panelName: 'react-ps-plugin',
+  width: '1000',
+  height: '800',
+  root: root,
+  sourceFolder: srcFolder,
+  destinationFolder: destFolder,
+  certificate: {
+    customCert: {
+      path: '',
+      password: 'password'
+    },
+    selfSign: {
+      country: 'US',
+      province: 'CA',
+      org: 'org',
+      name: '',
+      password: '',
+      locality: 'locality',
+      orgUnit: 'orgUnit',
+      email: '',
+      output: certPath
     }
-
-}
+  }
+};
 ```
 when build is happening, then the build will pickup your package id and panel name
 and other configurations from this file and will use it against a template that will

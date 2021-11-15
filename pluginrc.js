@@ -23,11 +23,11 @@ module.exports = {
       country: 'US',
       province: 'CA',
       org: 'org',
-      name: 'ezio',
-      password: 'jimmy82213',
+      name: '',
+      password: 'password',
       locality: 'locality',
       orgUnit: 'orgUnit',
-      email: 'ezioreturner@gmail.com',
+      email: '',
       output: certPath
     }
   }
