@@ -1,4 +1,4 @@
-<h1 align="center">react-ps-plugin</h1>
+<h1 align="center">adobe-cep-plugin-react</h1>
 
 <div align="center">
   adobe cep plugin by react & typescript
