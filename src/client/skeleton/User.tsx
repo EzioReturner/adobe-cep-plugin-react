@@ -1,12 +1,12 @@
 import React from 'react';
-import './user.less';
+import { Layout } from 'raturbo-components';
 
 const UserLayout: React.FC = props => {
   const { children } = props;
   return (
-    <div className="LK-UserSkeleton">
-      <div>{children}</div>
-    </div>
+    <Layout fixHeader hideHeader hideSider>
+      {children}
+    </Layout>
   );
 };
 export default UserLayout;

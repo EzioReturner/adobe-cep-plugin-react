@@ -1,14 +1,11 @@
 import React, { Suspense } from 'react';
 import Authorized from '@components/Authorized';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import LayoutStore from '@store/layoutStore';
 import { getRouteAuthority } from '@utils/authorityTools';
 import { Spin, Layout } from 'raturbo-components';
-import SiderMenu from './components/SiderMenu';
-import UserInfo from './components/UserInfo';
 import './Main.less';
-import './components/styles/index.less';
 
 const Exception403 = React.lazy(() => import(/* webpackChunkName: "403" */ '@views/Exception/403'));
 
@@ -22,11 +19,7 @@ interface InjectProps extends MainSkeletonProps {
 
 const MainSkeleton: React.FC<MainSkeletonProps> = props => {
   const {
-    layoutStore: {
-      toggleCollapsed,
-      loadingOptions,
-      layoutStatus: { collapsed }
-    }
+    layoutStore: { loadingOptions }
   } = props as InjectProps;
 
   let location = useLocation();
@@ -54,18 +47,13 @@ const MainSkeleton: React.FC<MainSkeletonProps> = props => {
   );
 
   return (
-    <main style={{ height: '100%' }}>
-      <Layout
-        collapsed={collapsed}
-        onChangeCollapsed={col => toggleCollapsed(col)}
-        fixHeader
-        fixSider
-        sider={<SiderMenu />}
-        header={<UserInfo />}
-      >
-        {Content}
-      </Layout>
-    </main>
+    <Authorized unidentified={<Redirect to="/user/login" />}>
+      <main style={{ height: '100%' }}>
+        <Layout fixHeader hideHeader hideSider>
+          {Content}
+        </Layout>
+      </main>
+    </Authorized>
   );
 };
 

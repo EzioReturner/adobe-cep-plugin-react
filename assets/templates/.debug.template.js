@@ -3,7 +3,7 @@ module.exports = (props) =>
 <ExtensionList>
   <Extension Id="${props.extensionBundleId}">
   <HostList>
-    <Host Name="PHXS" Port="3001" />
+    <Host Name="PHXS" Port="7001" />
     <Host Name="PHSP" Port="3002" />
     <Host Name="IDSN" Port="3003" />
     <Host Name="AICY" Port="3004" />

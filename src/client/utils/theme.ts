@@ -35,12 +35,6 @@ export function changeTheme(visionTheme: string, currentColor: string) {
       document.body.style.setProperty('--primary-2', color2tint(rgbColor, 0.8));
       document.body.style.setProperty('--primary-5', color2tint(rgbColor, 0.2));
 
-      document.body.style.setProperty('--antd-slider-focus-shadow', hsl2fade(hslColor, 0.12));
-      document.body.style.setProperty('--antd-select-focus-shadow', hsl2fade(hslColor, 0.2));
-
-      document.body.style.setProperty('--antd-slider-active', color2tint(rgbColor, 0.5));
-      document.body.style.setProperty('--antd-slider-focus', color2tint(rgbColor, 0.2));
-
       console.log('sussess');
     });
 }

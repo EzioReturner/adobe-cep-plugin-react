@@ -1,21 +1,17 @@
 import React from 'react';
-import { Button, notification } from 'antd';
+import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 
 const ExceptionHome: React.FC = () => {
   const history = useHistory();
   const handleTriggerError = ({ code, description }: { code: number; description: string }) => {
     history.push(`/exception/${code}`);
-    notification.error({
-      message: `请求错误 ${code}`,
-      description
-    });
   };
 
   return (
     <div>
       <Button
-        type="primary"
+        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 403,
@@ -29,7 +25,7 @@ const ExceptionHome: React.FC = () => {
         style={{
           margin: '0 16px'
         }}
-        type="primary"
+        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 404,
@@ -40,7 +36,7 @@ const ExceptionHome: React.FC = () => {
         错误404
       </Button>
       <Button
-        type="primary"
+        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 500,

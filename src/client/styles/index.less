@@ -1,7 +1,4 @@
 @import './nprogress.less';
-@import './antdStyle.less';
-
-// @import './darkTheme.less';
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -16,6 +13,7 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  background-color: #091824;
 }
 
 body {
@@ -36,13 +34,8 @@ body {
   --primary-2: tint(@primary-color, 80%);
   --primary-5: tint(@primary-color, 20%);
 
-  --antd-slider-focus: tint(@primary-color, 20%);
-  --antd-slider-active: tint(@primary-color, 50%);
-  --antd-slider-focus-shadow: fade(@primary-color, 12%);
-  --antd-select-focus-shadow: fade(@primary-color, 20%);
-
   --component-background: #ffffff;
-  --body-background: #f3f3f3;
+  --body-background: #091824 !important;
   --navigator-background: #ffffff;
   --popover-background: #ffffff;
   --text-color: rgba(0, 0, 0, 0.65);
@@ -52,8 +45,9 @@ body {
   --shadow-color: rgba(189, 189, 189, 0.6);
 
   &.darkTheme {
-    --text-color: rgba(255, 255, 255, 0.65);
-    --text-color-secondary: rgba(255, 255, 255, 0.45);
+    --text-color: rgba(255, 255, 255) !important;
+    --text-color-secondary: rgba(255, 255, 255, 0.7) !important;
+    --text-color-disabled: rgba(255, 255, 255, 0.5) !important;
     --heading-color: rgba(255, 255, 255, 0.85);
     --body-background: #0c0c0c;
     --navigator-background: #222222;

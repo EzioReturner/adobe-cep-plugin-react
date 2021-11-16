@@ -11,7 +11,6 @@ import {
 import { constantRouteConfig, asyncRouteConfig } from '@config/router.config';
 import { userStore } from './userStore';
 import intersection from 'lodash/intersection';
-import { message } from 'antd';
 import { changeTheme } from '@utils/theme';
 import { useLocationQuery } from '@utils/customHooks';
 
@@ -59,7 +58,7 @@ class LayoutStore {
     contentAreaWidthMode: (contentAreaWidthMode as 'max-width' | 'flow') || 'max-width', // 内容区域宽度
     fixSiderBar: true, // 固定左侧导航
     fixHeader: true, // 固定顶部header
-    visionTheme: 'light', // 视觉主题
+    visionTheme: 'dark', // 视觉主题
     collapsed: false,
     isMobile: false,
     currentColor: '#fb4491'
@@ -119,49 +118,6 @@ class LayoutStore {
     return this.layoutStatus.visionTheme === 'dark';
   }
 
-  createLessScriptAndLink() {
-    const body = document.body;
-
-    // 生成link标签
-    let link = document.createElement('link');
-
-    link.setAttribute('rel', 'stylesheet/less');
-    link.setAttribute('type', 'text/css');
-    link.setAttribute('href', './color.less');
-
-    body.prepend(link);
-
-    // 生成script标签
-    let script = document.createElement('script');
-
-    script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js');
-    script.setAttribute('type', 'text/javascript');
-
-    script.onload = () => {
-      runInAction(() => {
-        const status = localStorage.getItem('LK-layoutStatus');
-        if (status) {
-          const _status = JSON.parse(status);
-          if (
-            _status.visionTheme !== this.layoutStatus.visionTheme ||
-            _status.currentColor !== this.layoutStatus.currentColor
-          ) {
-            message.loading('正在应用视觉风格', 3);
-            setTimeout(() => {
-              this.changeLayoutVision();
-            }, 300);
-          }
-          this.layoutStatus = _status;
-        }
-        if (this.isHorizontalNavigator) {
-          this.layoutStatus.layoutMode = 'split';
-        }
-      });
-    };
-
-    body.appendChild(script);
-  }
-
   @action
   effectUrlQueryConfig() {
     const search = window.location.href.split('?')[1];
@@ -181,11 +137,7 @@ class LayoutStore {
     this.initialRouteConfig();
   }
 
-  initLayoutStatus() {
-    if (useTheme) {
-      this.createLessScriptAndLink();
-    }
-  }
+  initLayoutStatus() {}
 
   // 初始化路由配置信息，当前session只能设置一次
   @action initialRouteConfig(): void {
@@ -283,7 +235,6 @@ class LayoutStore {
   // 切换collapsed
   @action toggleCollapsed = (collapsed?: any): void => {
     this.layoutStatus.collapsed = collapsed;
-    console.log(this.layoutStatus);
   };
 
   // 调整status

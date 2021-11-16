@@ -23,7 +23,7 @@ deploy();
  *
  */
 function deploy() {
-  utils.log_progress(`DEPLOY for ${env}`, 'blue');
+  utils.log_progress(`[info]: DEPLOY for ${env}\n`, 'blue');
 
   cleanTarget(resolvedTargetFolder);
 
@@ -36,7 +36,7 @@ function deploy() {
 }
 
 function printDeploymentFolder() {
-  utils.log_progress(`deployed to folder ${resolvedTargetFolder}`, 'green');
+  utils.log_progress(`[info]: deployed to folder ${resolvedTargetFolder}\n`, 'green');
 }
 
 /**
@@ -68,7 +68,7 @@ function resolveExtensionFolder() {
  *
  */
 function cleanTarget(target) {
-  utils.log_progress('cleaning target');
+  utils.log_progress('[info]: cleaning target\n');
 
   try {
     if (fs.existsSync(target) && fs.lstatSync(target).isSymbolicLink()) fs.unlinkSync(target);
@@ -84,7 +84,7 @@ function cleanTarget(target) {
  */
 function deployDevMode() {
   try {
-    utils.log_progress('patching');
+    utils.log_progress('[info]: patching\n');
     if (isWindows) {
       execSync(
         'REG ADD HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.8 /v PlayerDebugMode /t REG_SZ /d 1 /f'
@@ -100,7 +100,7 @@ function deployDevMode() {
     utils.log_error(err);
   }
 
-  utils.log_progress('creating symlink into extensions folder');
+  utils.log_progress('[info]: creating symlink into extensions folder\n');
   try {
     var type = isWindows ? 'junction' : 'dir';
 
@@ -115,7 +115,7 @@ function deployDevMode() {
  *
  */
 function deployProdMode() {
-  utils.log_progress('copying into extensions folder');
+  utils.log_progress('[info]: copying into extensions folder\n');
   try {
     utils.copyRecursiveSync(DIST_FOLDER, resolvedTargetFolder);
   } catch (err) {

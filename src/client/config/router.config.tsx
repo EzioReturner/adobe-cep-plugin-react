@@ -1,5 +1,3 @@
-import { PieChartOutlined, InfoCircleOutlined } from '@ant-design/icons';
-
 export const constantRouteConfig: { app: RouteRoot; user: RouteRoot } = {
   app: {
     path: '/',
@@ -10,7 +8,13 @@ export const constantRouteConfig: { app: RouteRoot; user: RouteRoot } = {
   user: {
     path: '/user',
     component: '/skeleton/User',
-    routes: []
+    routes: [
+      {
+        name: 'login',
+        path: '/user/login',
+        component: '/views/Login'
+      }
+    ]
   }
 };
 
@@ -23,14 +27,22 @@ export const asyncRouteConfig: RouteChild[] = [
   },
   {
     name: 'dashboard',
-    icon: <PieChartOutlined />,
     path: '/dashboard',
     component: '/views/Dashboard',
     loading: true
   },
   {
+    name: 'material',
+    path: '/material',
+    routes: [
+      {
+        name: 'upload',
+        path: '/material/upload'
+      }
+    ]
+  },
+  {
     name: 'exception',
-    icon: <InfoCircleOutlined />,
     path: '/exception',
     routes: [
       {
@@ -56,5 +68,6 @@ export const asyncRouteConfig: RouteChild[] = [
       }
     ]
   }
+
   // ...async routes anchor [do not remove this code]
 ];

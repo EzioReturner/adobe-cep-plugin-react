@@ -105,39 +105,15 @@ your UI results with watching at the browser, simply use:
 this will generate the template html for you and run it in your browser,
 and will rebuild on code changes which is nice to have.
 
-#### back end side / session (using node modules)
-inside `src/session-src` you have the entry point for using native node.js modules.
-Adobe-CEP supports instantiating Node.js runtime as well as Chromium but I believe
-most developers would like to use the power of Node.js for doing IO.
-
-Adobe-CEP does provide it's native IO for disk access and also using Chromium
-you can use the browser `Fetch` api, but it can lead to very bad code structuring.
-
-I inject the `session` object in the `window` object and therefore it is accessible
-even from the front end side.  
-Also notice, that this folder has it's own `node-modules` separate from the root folder,
-this is because, they are built differently from the Front end side.
-
-using node modules can enhance the functionality.
-
 #### ExtendScript side
 inside `src/host`, you will put you `jsx` files, by default I will load `index.jsx`,
-but I highly advise to use the session to load a `jsx` file dynamically so it can pick
+but I highly advise to use the `bridge` to load a `jsx` file dynamically so it can pick
 up it's `#include` dependencies otherwise it won't (this is a known issue)
 
 #### Webpack side
 so why am I using **Webpack** ?  
 without webpack, you will have to require modules by absolute path, which is not nice,
 also I wanted to enjoy a better ES6 syntax.
-
-why are there separate **Webpack** configs for `client` and `session`?  
-very good question. It boils down to the following fact, the client/front-end side, uses
-pure web technologies and can be bundeled with all of it's dependencies and it has a classic
-`web` target for webpack.  
-the `session` side uses native node.js modules and has a `node` target in it's config, they
-are not to be mixed together or else subtle configuration will not work. this is equivalent
-to other projects using `electron`, also, it is not advisable to bundle native node.js modules,
-this is not efficient.
 
 #### Build scripts
 inside `/scripts`, you will find the webpack configs and also the build and deploy
@@ -152,10 +128,6 @@ the adobe extensions folder in debug mode currently, I still need to sign the ex
 #### FAQ
 **Q:** how do I add more web development modules (like redux) ?  
 **A:** simply `npm install redux` from the root `./` directory  
-
-**Q:** how do I add more session native node modules (like fs-extra) ?  
-**A:** simply `npm install fs-extra` from the `./src/session-src` directory, when building occurs, these
-modules will be copied to the `./dist` folder.  
 
 **Q:** how do I add some js lib without npm ?  
 **A:** simply edit `./src/index.html`  

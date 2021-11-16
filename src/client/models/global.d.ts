@@ -19,6 +19,7 @@ declare interface Window {
   renderEnvironment?: string;
   __REACT_DEVTOOLS_GLOBAL_HOOK__: any;
   WEEKMAP: string[];
+  bridge: StoreKeyValue;
 }
 
 declare interface Breadcrumb {

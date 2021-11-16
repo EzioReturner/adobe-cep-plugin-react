@@ -10,7 +10,7 @@ interface Languages {
 
 configure({ enforceActions: 'observed' });
 class LocaleStore {
-  @observable lang: string = localStorage.getItem('lucky-lang') || 'zh_CN';
+  @observable lang: string = localStorage.getItem('RA-lang') || 'zh_CN';
   @observable localeContent: any = {};
   @observable languages: Languages[] = [];
   dict: string = '';
@@ -53,7 +53,7 @@ class LocaleStore {
 
   @action setLocale(key: string): void {
     this.lang = key;
-    localStorage.setItem('lucky-lang', key);
+    localStorage.setItem('RA-lang', key);
     this.dispachLocaleContent();
   }
 

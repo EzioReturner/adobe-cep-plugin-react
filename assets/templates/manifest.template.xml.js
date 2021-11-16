@@ -1,5 +1,5 @@
-module.exports = (props) =>
-`<?xml version="1.0" encoding="UTF-8"?>
+module.exports = props =>
+  `<?xml version="1.0" encoding="UTF-8"?>
 <!--Copyright 2018 Adobe. All rights reserved.This file is licensed to you under the Apache License, Version 2.0 (the "License");you may not use this file except in compliance with the License. You may obtain a copyof the License at http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, software distributed underthe License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONSOF ANY KIND, either express or implied. See the License for the specific languagegoverning permissions and limitations under the License. -->
 <ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    ExtensionBundleId="${props.extensionBundleId}"
@@ -74,4 +74,4 @@ module.exports = (props) =>
       </DispatchInfo>
     </Extension>
   </DispatchInfoList>
-</ExtensionManifest>`
+</ExtensionManifest>`;

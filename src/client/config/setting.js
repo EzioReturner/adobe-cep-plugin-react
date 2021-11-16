@@ -1,9 +1,13 @@
 // @ts-ignore
 module.exports = {
-  siteName: 'RA-cep-plugin',
+  siteName: 'adobe-cep-plugin-react',
   useMenu: true,
   useHeader: true,
-  copyright: ['RA-cep-plugin', 'ezioreturner@gmail.com', 'https://github.com/EzioReturner'],
+  copyright: [
+    'adobe-cep-plugin-react',
+    'ezioreturner@gmail.com',
+    'https://github.com/EzioReturner'
+  ],
   menuLinkUrl: 'https://github.com/EzioReturner/adobe-cep-plugin-react',
   iconfontUrl: '//at.alicdn.com/t/font_842049_rn496ve5nkq.js',
   layoutMode: 'split',

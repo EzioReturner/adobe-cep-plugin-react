@@ -4,13 +4,13 @@ const srcFolder = path.join(root, 'src');
 const destFolder = path.join(root, 'dist');
 const certPath = path.join(destFolder, 'cert.p12');
 module.exports = {
-  extensionBundleId: 'com.react.ps.plugin',
-  extensionBundleName: 'react.ps.plugin',
+  extensionBundleId: 'com.react.adobe.plugin',
+  extensionBundleName: 'react.adobe.plugin',
   extensionBundleVersion: '1.0.1',
   cepVersion: '7.0',
-  panelName: 'react-ps-plugin',
-  width: '1000',
-  height: '800',
+  panelName: 'react-adobe-plugin',
+  width: '50',
+  height: '650',
   root: root,
   sourceFolder: srcFolder,
   destinationFolder: destFolder,

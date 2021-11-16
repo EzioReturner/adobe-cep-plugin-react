@@ -18,9 +18,6 @@ const lib_version = libVersion ? libVersion.replace(/\./g, '_') : null;
 
 const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = FileSizeReporter;
 
-// const webpack_session_config_path = path.join(paths.appSrc, 'webpack', 'webpack.session.config.js');
-const sessionConfig = require('../webpack/webpack.session.config');
-
 const { original } = JSON.parse(process.env.npm_config_argv);
 const useDll = original.includes('--dll');
 
@@ -51,8 +48,6 @@ rm(DIST_FOLDER, async function (err) {
       .then(async res => {
         await buildClient(previousFileSizes);
 
-        await buildSession();
-
         copyAdobeFiles();
 
         generateManifest();
@@ -70,9 +65,16 @@ rm(DIST_FOLDER, async function (err) {
 function runWebpack(config) {
   return new Promise((resolve, reject) => {
     return webpack(config).run((err, stats) => {
-      checkRunError(stats);
-      return err ? reject(err) : resolve(stats);
+      if (err) {
+        reject(err);
+      } else {
+        checkRunError(stats);
+        resolve(stats);
+      }
     });
+  }).catch(err => {
+    checkRunError(err, true);
+    throw err;
   });
 }
 
@@ -84,7 +86,6 @@ async function buildClient(previousFileSizes) {
 
   const config = prodConfigFactory();
   const result = await runWebpack(config);
-
   spinner.stop();
 
   printFileSizesAfterBuild(
@@ -96,18 +97,6 @@ async function buildClient(previousFileSizes) {
   );
 
   log_progress('\n[info]: client build complete.\n', 'yellow');
-}
-
-async function buildSession() {
-  const spinner = ora({ color: 'green', text: 'building for session...' });
-  log_progress('[info]: start to build session...\n', 'yellow');
-  spinner.start();
-
-  const config = sessionConfig();
-  await runWebpack(config);
-
-  spinner.stop();
-  log_progress('[info]: session build complete.\n', 'yellow');
 }
 
 function devProcess() {
@@ -185,14 +174,8 @@ function checkDllFiles() {
   }
 }
 
-function copyFilesToFolder(path) {
-  fsExtra.copySync(path, paths.appBuildDist, {
-    dereference: true
-  });
-}
-
-function checkRunError(stats) {
-  if (stats.hasErrors()) {
+function checkRunError(stats, force) {
+  if (stats.hasErrors?.() || force) {
     process.stdout.write(stats.toString() + '\n');
     log_progress('[result]: build failed with errors.\n');
     process.exit(1);

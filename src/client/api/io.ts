@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import { notification } from 'antd';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 interface IoOptions extends AxiosRequestConfig {
@@ -39,15 +38,7 @@ class Request {
   };
 
   // 错误notify
-  notify(message: string | number) {
-    notification.error({
-      message: '请求错误',
-      description: `${
-        message ||
-        'This is the content of the notification. This is the content of the notification. This is the content of the notification.'
-      }`
-    });
-  }
+  notify(message: string | number) {}
 
   // 错误处理
   handleError = (error: any) => {

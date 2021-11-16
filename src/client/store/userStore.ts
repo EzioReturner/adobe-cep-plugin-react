@@ -9,7 +9,7 @@ class UserStore {
   // 用户信息
   @observable userInfo: any = {};
   // 用户权限码
-  @observable authority: string[] = ['admin'];
+  @observable authority: string[] = [];
   // 当前的验证状态
   @observable identifyStatus: IdentifyStatus = 'identifying';
 
@@ -19,8 +19,8 @@ class UserStore {
 
   @computed
   get authRedirect() {
-    const [, app] = layoutStore.routeConfig;
-    const appRoutes = app.routes;
+    const [user] = layoutStore.routeConfig;
+    const appRoutes = user.routes;
     if (appRoutes) {
       let redirectPath = '';
       for (let index = 0; index < appRoutes.length; index++) {
@@ -43,9 +43,20 @@ class UserStore {
     // }, 1000);
   };
 
+  // 获取用户权限
+  getAuthority = (str?: undefined | string): string[] => {
+    const authorityString: string | null =
+      typeof str === 'undefined' ? window.localStorage.getItem('RA-authority') : str;
+    let authority: string[];
+    authority = authorityString ? JSON.parse(authorityString) : [];
+    return authority;
+  };
+
   // 设置用户权限
-  @action setAuthority = (authority: string[]): void => {
-    this.authority = authority;
+  @action setAuthority = (authority: string | string[]): void => {
+    const raAuthority: string[] = typeof authority === 'string' ? [authority] : authority;
+    window.localStorage.setItem('RA-authority', JSON.stringify(raAuthority));
+    this.authority = raAuthority;
     this.identifyStatus = 'identifyPass';
   };
 
