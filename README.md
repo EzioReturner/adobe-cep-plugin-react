@@ -4,6 +4,13 @@
   adobe cep plugin by react & typescript
 </div>
 
+<div align="center">
+  reference to 
+  <a href="https://github.com/HendrixString/adobe-cep-react-create">
+    adobe-cep-react-create
+  </a>
+</div>
+
 this Adobe-CEP extension creator bootstraps for creating Adobe CC extensions easily with
 modern web technologies and with native node.js modules for session logic
 and with support for extendscript (host app). It is built in a semi opinionated
@@ -89,7 +96,7 @@ debugging is achieved through the chrome debugger
 this bootstrap is composed of three parts
 
 #### Front end side
-inside `src/client-src` you have the entry point for creating ReactJS application.
+inside `src/client` you have the entry point for creating ReactJS application.
 installing modules is against the project root, see `/project.json`.  
 a nice feature, that it has is that you can use `webpack-dev-server` to see
 your UI results with watching at the browser, simply use:
@@ -133,14 +140,14 @@ to other projects using `electron`, also, it is not advisable to bundle native n
 this is not efficient.
 
 #### Build scripts
-inside `/build-scripts`, you will find the webpack configs and also the build and deploy
+inside `/scripts`, you will find the webpack configs and also the build and deploy
 scripts. They use no-fancy node modules to keep things simple (no libs like Gulp).
 
 you can find:  
-- `/build-script/build.js development/production` this will build the entire thing
-- `/build-script/deploy.js development/production` this will deploy the entire thing into
+- `/script/build.js development/production` this will build the entire thing
+- `/script/deploy.js development/production` this will deploy the entire thing into
 the adobe extensions folder in debug mode currently, I still need to sign the extension
-- `/build-script/archive.js` this will archive the distribution in **ZXP** format, ready to be published
+- `/script/archive.js` this will archive the distribution in **ZXP** format, ready to be published
 
 #### FAQ
 **Q:** how do I add more web development modules (like redux) ?  
