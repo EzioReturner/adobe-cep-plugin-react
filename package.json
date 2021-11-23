@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./scripts/start.js",
     "build": "node --max_old_space_size=8192 scripts/build.js",
+    "watch": "node --max_old_space_size=8192 scripts/watch.js development",
     "build:dev": "node --max_old_space_size=8192 scripts/build.js development",
     "build:prod": "node --max_old_space_size=8192 scripts/build.js  production",
     "deploy:dev": "node scripts/deploy.js development",
