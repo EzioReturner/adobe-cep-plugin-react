@@ -32,7 +32,7 @@ function deploy() {
 
   printDeploymentFolder();
 
-  utils.log_progress('DONE', 'blue');
+  utils.log_progress('DONE\n', 'blue');
 }
 
 function printDeploymentFolder() {
@@ -122,3 +122,7 @@ function deployProdMode() {
     utils.log_error(err);
   }
 }
+
+module.exports = {
+  deploy
+};

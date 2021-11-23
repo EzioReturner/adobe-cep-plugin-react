@@ -2,7 +2,7 @@
 
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
-process.env.PORT = 9009;
+process.env.PORT = 9099;
 
 process.on('unhandledRejection', err => {
   throw err;
@@ -16,7 +16,7 @@ const devConfig = require('../webpack/webpack.dev');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
 
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 9009;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 9099;
 const HOST = process.env.HOST || '0.0.0.0';
 
 (function startClient() {
