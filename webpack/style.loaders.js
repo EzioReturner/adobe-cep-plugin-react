@@ -3,6 +3,7 @@ const postcssNormalize = require('postcss-normalize');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const paths = require('./paths');
+const { getThemeVariables } = require('antd/dist/theme');
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -69,9 +70,9 @@ module.exports = function () {
               ? {
                   javascriptEnabled: true,
                   modifyVars: {
-                    '@primary-color': '#536ec2',
-                    '@font-size-base': '13px',
-                    'brand-primary': '#586fbc'
+                    ...getThemeVariables({
+                      dark: true
+                    })
                   }
                 }
               : undefined

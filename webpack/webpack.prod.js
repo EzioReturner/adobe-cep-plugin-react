@@ -16,7 +16,6 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const paths = require('./paths');
 
-const appPackageJson = require(paths.appPackageJson);
 const baseConfig = require('./webpack.base');
 const setting = require('../src/client/config/setting');
 
@@ -117,17 +116,6 @@ module.exports = function () {
             },
             priority: 20
           },
-          // npmLib: {
-          //   chunks: 'async',
-          //   test: /[\\/]node_modules[\\/]/,
-          //   name(module) {
-          //     const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-          //     return `npm.${packageName.replace('@', '')}`;
-          //   },
-          //   minSize: 10 * 1000 * 1000,
-          //   reuseExistingChunk: true,
-          //   priority: 20
-          // },
           // 入口共享chunks
           vendors: {
             chunks: 'initial',

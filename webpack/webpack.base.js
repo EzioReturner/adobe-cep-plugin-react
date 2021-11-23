@@ -11,6 +11,8 @@ const styleLoaders = require('./style.loaders');
 
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
+const isWatchMode = process.env.MODE === 'watch';
+
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
 
 const hasJsxRuntime = (() => {
@@ -99,7 +101,7 @@ const baseConfig = {
                     }
                   }
                 ],
-                isEnvDevelopment && require.resolve('react-refresh/babel')
+                isEnvDevelopment && !isWatchMode && require.resolve('react-refresh/babel')
               ].filter(Boolean),
               cacheDirectory: true,
               cacheCompression: false,
@@ -151,54 +153,7 @@ const baseConfig = {
     ]
   },
   optimization: {
-    minimize: false,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          parse: {
-            ecma: 8
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-            inline: 2
-          },
-          mangle: {
-            safari10: true
-          },
-          keep_classnames: false,
-          keep_fnames: false,
-          output: {
-            ecma: 5,
-            comments: false,
-            ascii_only: true
-          }
-        },
-        sourceMap: shouldUseSourceMap
-      }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          parser: safePostCssParser,
-          map: shouldUseSourceMap
-            ? {
-                inline: false,
-                annotation: true
-              }
-            : false
-        },
-        cssProcessorPluginOptions: {
-          preset: ['default', { minifyFontValues: { removeQuotes: false } }]
-        }
-      })
-    ],
-    splitChunks: {
-      chunks: 'all',
-      name: true
-    },
-    runtimeChunk: {
-      name: entrypoint => `runtime-${entrypoint.name}`
-    }
+    minimize: false
   },
 
   plugins: [

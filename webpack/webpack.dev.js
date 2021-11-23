@@ -12,7 +12,6 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
-const appPackageJson = require(paths.appPackageJson);
 
 const setting = require('../src/client/config/setting');
 
@@ -46,15 +45,11 @@ module.exports = Object.assign(baseConfig, {
     plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson, reactRefreshOverlayEntry])]
   },
   output: {
+    publicPath: '/',
     path: undefined,
     pathinfo: true,
-    publicPath: '/',
     filename: 'js/bundle.js',
-    chunkFilename: 'js/[name].chunk.js',
-    jsonpFunction: `webpackJsonp${appPackageJson.name}`,
-    globalObject: 'this',
-    devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+    chunkFilename: 'js/[name].chunk.js'
   },
   plugins: [
     ...plugins,
