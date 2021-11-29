@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 const ExceptionHome: React.FC = () => {
@@ -11,7 +11,6 @@ const ExceptionHome: React.FC = () => {
   return (
     <div>
       <Button
-        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 403,
@@ -25,7 +24,6 @@ const ExceptionHome: React.FC = () => {
         style={{
           margin: '0 16px'
         }}
-        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 404,
@@ -36,7 +34,6 @@ const ExceptionHome: React.FC = () => {
         错误404
       </Button>
       <Button
-        variant="contained"
         onClick={() =>
           handleTriggerError({
             code: 500,

@@ -1,5 +1,7 @@
 import Axios from 'axios';
+import { notification } from 'antd';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import isNil from 'lodash/isNil';
 
 interface IoOptions extends AxiosRequestConfig {
   returnConfig?: boolean; // 是否返回req配置项
@@ -10,13 +12,7 @@ class Request {
   instance: AxiosInstance;
 
   constructor() {
-    const baseURL = ['localhost', '0.0.0.0', '10.130.94.195'].includes(window.location.hostname)
-      ? `http://${window.location.hostname}:8081`
-      : window.location.origin;
-    this.instance = Axios.create({
-      baseURL,
-      timeout: 60000
-    });
+    this.instance = Axios.create();
     this.initInterceptors();
   }
 
@@ -38,19 +34,19 @@ class Request {
   };
 
   // 错误notify
-  notify(message: string | number) {}
+  notify(message: string | number) {
+    notification.error({
+      message: '请求错误',
+      description: `${
+        message ||
+        'This is the content of the notification. This is the content of the notification. This is the content of the notification.'
+      }`
+    });
+  }
 
   // 错误处理
   handleError = (error: any) => {
-    const { errMsg, status, errCode } = error;
-    if (errCode === '0990010600') {
-      if (window.location.hostname === 'localhost') {
-        console.log(`登录 token 失效，请重新获取 token`);
-      } else {
-        console.log(`登录状态失效，请重新登录`);
-        window.location.href = '/logout';
-      }
-    }
+    const { message, status } = error;
     switch (status) {
       case 401:
         break;
@@ -59,24 +55,14 @@ class Request {
       case 500:
         break;
       default:
-        this.notify(errMsg || error);
+        this.notify(message || error);
         break;
     }
     return Promise.reject(error);
   };
 
-  filterStatus(res: any, returnConfig: boolean) {
-    const { data } = res;
-    if (Array.isArray(data)) return data;
-    if (data.success) {
-      return returnConfig ? res : data;
-    } else {
-      return Promise.reject(data);
-    }
-  }
-
   sendRequest(method: Method, url: string, details: IoOptions) {
-    const { params, returnConfig = false, data, options } = details;
+    const { params, returnConfig, data, options } = details;
     return this.instance
       .request({
         url,
@@ -95,15 +81,17 @@ class Request {
     if (params) {
       const keys = Object.keys(params);
       if (keys.length) {
-        _path += `?${keys.map(key => `${key}=${params[key]}`).join('&')}`;
+        _path += `?${keys
+          .filter(key => !isNil(key) && params[key] !== undefined)
+          .map(key => `${key}=${params[key]}`)
+          .join('&')}`;
       }
     }
     return this.sendRequest('get', _path, data);
   }
 
   post(path: string, data: IoOptions) {
-    const _path = path + '?_csrf=' + window.pageConfig._csrf;
-    return this.sendRequest('post', _path, data);
+    return this.sendRequest('post', path, data);
   }
 
   put(path: string, data: IoOptions) {

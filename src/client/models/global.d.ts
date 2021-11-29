@@ -8,6 +8,21 @@ declare const NODE_RA_ENV: string = 'development' | 'production';
 
 declare const REQUEST_SUCCESS: number = 0;
 
+declare interface CSInterfaceInstance {
+  getExtensionID(): string;
+  setPanelFlyoutMenu(xml: string): void;
+  addEventListener(name: string, callback: (event: any) => void): void;
+  dispatchEvent(event: CSEventInstance): void;
+  evalScript(name: string, callback: (event: any) => void): void;
+}
+
+declare interface CSEventInstance {
+  type?: string;
+  scope?: string;
+  extensionId?: string;
+  data?: string;
+}
+
 declare interface Window {
   less: any;
   logProxy: (data: any) => void;
@@ -20,7 +35,17 @@ declare interface Window {
   __REACT_DEVTOOLS_GLOBAL_HOOK__: any;
   WEEKMAP: string[];
   bridge: StoreKeyValue;
+  CSInterface: {
+    new (): CSInterfaceInstance;
+  };
+  CSEvent: {
+    new (type?: string, scope?: string): CSEventInstance;
+  };
 }
+
+// declare interface CSInterfaceInstance {
+//   getExtensionID: () => string;
+// }
 
 declare interface Breadcrumb {
   name: string;

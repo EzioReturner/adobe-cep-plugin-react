@@ -1,0 +1,54 @@
+.material-upload {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  align-items: center;
+  position: relative;
+  
+  .reload-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+  }
+
+  .upload-type {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 110px;
+    margin-bottom: 40px;
+
+    &>div {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+
+      &>span {
+        display: inline-block;
+        margin-top: @spacing-normal;
+
+        &.active {
+          color: @primary-color;
+        }
+      }
+    }
+
+    img {
+      height: 55px;
+      width: 55px;
+    }
+
+    .divider {
+      width: 1px;
+      background-color: #666666;
+      height: 30px;
+      margin: 0 36px;
+    }
+  }
+
+  .material-select {
+    width: 300px;
+    margin-bottom: @spacing-large;
+  }
+}

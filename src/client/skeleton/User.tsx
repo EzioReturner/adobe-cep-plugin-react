@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'raturbo-components';
+import { Layout } from 'turbo-components';
 
 const UserLayout: React.FC = props => {
   const { children } = props;

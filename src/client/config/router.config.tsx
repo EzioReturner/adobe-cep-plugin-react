@@ -22,14 +22,8 @@ export const asyncRouteConfig: RouteChild[] = [
   {
     path: '/',
     exact: true,
-    redirect: '/dashboard',
+    redirect: '/material/upload',
     hideMenu: true
-  },
-  {
-    name: 'dashboard',
-    path: '/dashboard',
-    component: '/views/Dashboard',
-    loading: true
   },
   {
     name: 'material',
@@ -37,7 +31,8 @@ export const asyncRouteConfig: RouteChild[] = [
     routes: [
       {
         name: 'upload',
-        path: '/material/upload'
+        path: '/material/upload',
+        component: '/views/Materials/upload'
       }
     ]
   },

@@ -4,7 +4,7 @@ import { useLocation, Redirect } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import LayoutStore from '@store/layoutStore';
 import { getRouteAuthority } from '@utils/authorityTools';
-import { Spin, Layout } from 'raturbo-components';
+import { Spin, Layout } from 'turbo-components';
 import './Main.less';
 
 const Exception403 = React.lazy(() => import(/* webpackChunkName: "403" */ '@views/Exception/403'));

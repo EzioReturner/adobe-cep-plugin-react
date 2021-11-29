@@ -8,6 +8,14 @@ module.exports = {
       }
     ],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
+    ['import',
+    {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true
+    },
+    'antd'
+    ],
     [
       "import",
       {

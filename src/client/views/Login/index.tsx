@@ -1,20 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  TextField,
-  InputAdornment,
-  IconButton,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  Backdrop,
-  CircularProgress
-} from '@mui/material';
-import { AccountCircle, VpnKey, VisibilityOff, Visibility } from '@mui/icons-material';
+import { Checkbox, Button, Spin, Input } from 'antd';
+import { LoadingOutlined, UserOutlined, LockOutlined, ReloadOutlined } from '@ant-design/icons';
 import avatar from '@assets/login/avatar.png';
 import { useHistory } from 'react-router-dom';
 import bridge from '@/bridge/controller';
-
 import './index.less';
+
 interface Info<T = string> {
   no: T;
   password: T;
@@ -69,14 +60,19 @@ const Login: React.FC = () => {
   }, [loginInfo, validation]);
 
   const handleLogin = () => {
-    const pass = handleValidate();
-    if (pass) {
-      setLoading(true);
-
-      setTimeout(() => {
-        history.push('/material/upload');
-      }, 2000);
-    }
+    // const pass = handleValidate();
+    // if (pass) {
+    //   setLoading(true);
+    //   setTimeout(() => {
+    //     history.push('/material/upload');
+    //   }, 2000);
+    // }
+    // bridge.invokePlugin('creatNewDocument', {
+    //   height: 100,
+    //   width: 100,
+    //   resolution: 75,
+    //   docName: 'test'
+    // });
   };
 
   const handleChangeForm = (val: string, key: keyof Info) => {
@@ -87,12 +83,13 @@ const Login: React.FC = () => {
   };
 
   const handleInvoke = () => {
-    bridge.invokePlugin('creatNewDocument', {
-      height: 100,
-      width: 100,
-      resolution: 75,
-      docName: 'test'
-    });
+    // bridge.invokePlugin('creatNewDocument', {
+    //   height: 100,
+    //   width: 100,
+    //   resolution: 75,
+    //   docName: 'test'
+    // });
+    // bridge.invokePlugin('getDocuments', {});
   };
 
   useEffect(() => {
@@ -106,64 +103,27 @@ const Login: React.FC = () => {
 
   const Form = (
     <>
-      <TextField
+      <Input
         className="user-input"
-        error={validation.no}
-        helperText={validation.no ? '请输入Employ No' : ''}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          )
-        }}
-        onChange={e => handleChangeForm(e.target.value, 'no')}
+        size="large"
+        placeholder="请输入Employ No"
         value={loginInfo.no}
-        size="small"
-        label="Employ No."
-        variant="outlined"
+        onChange={e => handleChangeForm(e.target.value, 'no')}
+        prefix={<UserOutlined />}
       />
-      <TextField
+      <Input.Password
         className="user-input"
-        error={validation.password}
-        helperText={validation.password ? '请输入密码' : ''}
-        onChange={e => handleChangeForm(e.target.value, 'password')}
+        size="large"
+        placeholder="请输入密码"
         value={loginInfo.password}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <VpnKey />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          )
-        }}
-        type={showPassword ? 'text' : 'password'}
-        size="small"
-        label="Password"
-        variant="outlined"
+        onChange={e => handleChangeForm(e.target.value, 'password')}
+        prefix={<LockOutlined />}
       />
     </>
   );
 
   const Loading = (
-    <Backdrop
-      sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
-      open={loading}
-      onClick={() => setLoading(false)}
-    >
-      <CircularProgress color="inherit" />
-    </Backdrop>
+    <Spin spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
   );
 
   return (
@@ -172,27 +132,19 @@ const Login: React.FC = () => {
       {Loading}
       {Form}
       <footer className="user-footer">
-        <FormControlLabel
-          control={
-            <Checkbox
-              size="small"
-              checked={rememberPassword}
-              onChange={e => setRememberPassword(e.target.checked)}
-              inputProps={{ 'aria-label': 'controlled' }}
-            />
-          }
-          label={<span style={{ fontSize: '1px' }}>记住密码</span>}
-        />
+        <Checkbox checked={rememberPassword} onChange={e => setRememberPassword(e.target.checked)}>
+          <span>记住密码</span>
+        </Checkbox>
         <Button
+          type="primary"
           style={{ width: '90px', borderRadius: '18px' }}
-          variant="contained"
           onClick={handleLogin}
         >
           登录
         </Button>
         <Button
+          type="primary"
           style={{ width: '90px', borderRadius: '18px' }}
-          variant="contained"
           onClick={handleInvoke}
         >
           invoke

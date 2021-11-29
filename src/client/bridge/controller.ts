@@ -98,8 +98,8 @@ class Controller {
   }
 
   listenLog() {
-    this.scriptLoader?.addEventListener('lucky_event_log', (event: any) => {
-      console.log('lucky_event_log', event);
+    this.scriptLoader?.addEventListener('event_log', (event: any) => {
+      console.log('event_log', event);
     });
   }
 

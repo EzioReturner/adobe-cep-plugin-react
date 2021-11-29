@@ -3,6 +3,7 @@
   flex-flow: column nowrap;
   height: 100%;
   align-items: center;
+  position: relative;
 
   .user-avatar {
     height: 90px;
@@ -14,9 +15,11 @@
   .user-input {
     width: 300px;
     margin-bottom: 40px;
+    border-radius: 22px;
 
-    &>div {
-      border-radius: 22px;
+    input::placeholder {
+      padding-left: 6px;
+      font-size: 14px;
     }
   }
 
@@ -24,9 +27,16 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
     width: 300px;
     padding: 0 8px;
     box-sizing: border-box;
     color: var(--text-color);
+  }
+
+  .reload-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
   }
 }

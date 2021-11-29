@@ -9,7 +9,7 @@ class UserStore {
   // 用户信息
   @observable userInfo: any = {};
   // 用户权限码
-  @observable authority: string[] = [];
+  @observable authority: string[] = ['admin'];
   // 当前的验证状态
   @observable identifyStatus: IdentifyStatus = 'identifying';
 

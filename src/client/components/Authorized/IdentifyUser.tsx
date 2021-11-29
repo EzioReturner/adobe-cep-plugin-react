@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { observer, inject } from 'mobx-react';
 import UserStore from '@store/userStore';
 import { useHistory } from 'react-router-dom';
-import { Spin } from 'raturbo-components';
+import { Spin } from 'turbo-components';
 interface IdentifyUserProps {
   userStore: UserStore;
 }
