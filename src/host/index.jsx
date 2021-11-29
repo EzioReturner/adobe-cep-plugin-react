@@ -8,7 +8,7 @@ try {
 
 function dispatch(message) {
   var eventObj = new CSXSEvent();
-  eventObj.type = 'lucky_event_log';
+  eventObj.type = 'event_log';
   eventObj.data = message;
   eventObj.dispatch();
 }
