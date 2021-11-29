@@ -5,6 +5,10 @@
 </div>
 
 <div align="center">
+  photoshop cep 插件，集成 react & typescript
+</div>
+
+<div align="center">
   reference to 
   <a href="https://github.com/HendrixString/adobe-cep-react-create">
     adobe-cep-react-create
@@ -15,6 +19,14 @@ this Adobe-CEP extension creator bootstraps for creating Adobe CC extensions eas
 modern web technologies and with native node.js modules for session logic
 and with support for extendscript (host app). It is built in a semi opinionated
 way so you can focus on writing your great extensions.
+
+
+### 有哪些改动？
+- 移除原项目中的 `session` 文件夹，通过 `client/bridge` 作为 ps 通信桥梁。
+
+- 使用 `typescript` 增强代码鲁棒性。
+
+- 调整原项目的本地编译与打包代码，增加 `watch` 指令，方便与ps调试。
 
 #### how to build
 first run `npm  install`, then choose  
