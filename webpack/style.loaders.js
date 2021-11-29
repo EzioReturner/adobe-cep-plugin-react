@@ -72,7 +72,8 @@ module.exports = function () {
                   modifyVars: {
                     ...getThemeVariables({
                       dark: true
-                    })
+                    }),
+                    '@primary-color': '#6f679a'
                   }
                 }
               : undefined

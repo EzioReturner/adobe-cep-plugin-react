@@ -69,7 +69,7 @@ function runWatch(config) {
         if (err) {
           reject(err);
         } else {
-          checkRunError(stats);
+          // checkRunError(stats);
           resolve(stats);
         }
       }
