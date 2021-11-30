@@ -109,12 +109,11 @@ class ScriptLoader {
     this.cs.addEventListener(key, callback);
   }
 
-  // loadJSX(fileName) {
-  //   var cs = this.cs;
-  //   var extensionRoot = cs.getSystemPath(SystemPath.EXTENSION) + '/host/';
+  loadJSX(fileName: string) {
+    var extensionRoot = this.cs.getSystemPath(window.SystemPath.EXTENSION) + '/host/';
 
-  //   cs.evalScript('$.evalFile("' + extensionRoot + fileName + '")');
-  // }
+    this.cs.evalScript('$.evalFile("' + extensionRoot + fileName + '")');
+  }
 
   invokeScript(functionName: string, params: string) {
     var params_string = params ? JSON.stringify(params) : '';
@@ -122,6 +121,8 @@ class ScriptLoader {
     var eval_string = `${functionName}(${params_string})`;
 
     var that = this;
+
+    that.log(`eval string: ${eval_string}`);
 
     return new Promise((resolve, reject) => {
       var callback = function (eval_res: string) {
@@ -143,7 +144,7 @@ class ScriptLoader {
     });
   }
 
-  log(val: string) {
+  log(val: string | number) {
     console.log(`${this.name} ${val}`);
   }
 

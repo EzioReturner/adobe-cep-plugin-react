@@ -1,5 +1,5 @@
 import { materialStore } from '@/store/materialStore';
-import { CREATE_CODE, SELECT_CODE } from './constants';
+import events from './events';
 
 class Controller {
   constructor() {
@@ -21,9 +21,9 @@ class Controller {
 
     console.log('client controller has inited');
 
-    this.addListener();
+    events.init();
 
-    this.registerHostEvent();
+    this.loadJsxFiles();
 
     this.getDocuments();
 
@@ -40,16 +40,9 @@ class Controller {
     this.scriptLoader = scriptLoader.default;
   }
 
-  addListener() {
-    this.listenDocumentActive();
-    this.listenLog();
-    this.listenHostEvent();
-  }
-
-  registerHostEvent() {
-    process.env.NODE_ENV === 'production' && this.scriptLoader?.registerPersistent();
-
-    this.scriptLoader?.registerHostEvent(`${CREATE_CODE}, ${SELECT_CODE}`);
+  loadJsxFiles() {
+    this.scriptLoader?.loadJSX('tools.jsx');
+    this.scriptLoader?.loadJSX('JSON.jsx');
   }
 
   invokePlugin(functionName: string, params?: string) {
@@ -75,90 +68,13 @@ class Controller {
   }
 
   /**
-   * @NAME 获取文档下图层
-   */
-  // async getLayers(name: string) {
-  //   const layers = await this.invokePlugin('getLayers', name);
-  // }
-
-  /**
    * @NAME 切换激活文档
    */
   async setActiveDocument(name: string) {
     await this.invokePlugin('setActiveDocument', name);
   }
-
-  /**
-   * @NAME 监听document切换激活
-   */
-  listenDocumentActive() {
-    this.scriptLoader?.addEventListener('documentAfterActivate', (event: any) => {
-      // console.log('documentAfterActivate', event);
-    });
-  }
-
-  listenLog() {
-    this.scriptLoader?.addEventListener('event_log', (event: any) => {
-      console.log('event_log', event);
-    });
-  }
-
-  /**
-   * @NAME 监听注册的宿主事件
-   */
-  listenHostEvent() {
-    this.scriptLoader?.addEventListener(
-      'com.adobe.PhotoshopJSONCallback' + this.scriptLoader.extensionId,
-      this.photoshopCallbackUnique
-    );
-  }
-
-  /**
-   * @NAME 处理注册事件回调
-   */
-  photoshopCallbackUnique = (csEvent: any) => {
-    try {
-      if (typeof csEvent.data === 'string') {
-        var eventData = csEvent.data.replace('ver1,{', '{');
-        var eventDataObject = JSON.parse(eventData);
-
-        this.handleEventCallback(eventDataObject);
-      } else {
-        console.log('PhotoshopCallbackUnique expecting string for csEvent.data!');
-      }
-    } catch (e) {
-      console.log('PhotoshopCallbackUnique catch: ' + e);
-    }
-  };
-
-  /**
-   * @NAME 根据事件码处理回调
-   */
-  handleEventCallback(eventDataObject: StoreKeyValue) {
-    console.log('eventDataObject', eventDataObject);
-
-    const { eventID, eventData } = eventDataObject;
-
-    switch (eventID.toString()) {
-      case CREATE_CODE:
-        const { layerID, documentID } = eventData;
-
-        if (documentID) {
-          console.log('create document');
-        } else if (layerID) {
-          console.log('create layer');
-        }
-        break;
-
-      case SELECT_CODE:
-        console.log('select layer');
-        break;
-      default:
-        break;
-    }
-  }
 }
 
-var controller = new Controller();
+let controller = new Controller();
 
 export default controller;

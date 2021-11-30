@@ -13,7 +13,8 @@ declare interface CSInterfaceInstance {
   setPanelFlyoutMenu(xml: string): void;
   addEventListener(name: string, callback: (event: any) => void): void;
   dispatchEvent(event: CSEventInstance): void;
-  evalScript(name: string, callback: (event: any) => void): void;
+  evalScript(name: string, callback?: (event: any) => void): void;
+  getSystemPath(path: string): string;
 }
 
 declare interface CSEventInstance {
@@ -41,6 +42,7 @@ declare interface Window {
   CSEvent: {
     new (type?: string, scope?: string): CSEventInstance;
   };
+  SystemPath: any;
 }
 
 // declare interface CSInterfaceInstance {

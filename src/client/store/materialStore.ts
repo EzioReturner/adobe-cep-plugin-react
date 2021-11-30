@@ -9,6 +9,8 @@ class MaterialStore {
 
   @observable topLayers: string[] = [];
 
+  @observable selectedLayers: number[] = [];
+
   @action
   setDocuments = (documents: string[]) => {
     this.documents = documents;
@@ -26,6 +28,11 @@ class MaterialStore {
     bridge.setActiveDocument(doc);
   };
 
+  @action
+  updateSelectedLayer = (layerIds: number[]) => {
+    this.selectedLayers = layerIds;
+  };
+
   handleGetLayers = async () => {
     const result = await bridge.invokePlugin('getLayers');
 
@@ -35,6 +42,26 @@ class MaterialStore {
 
   handleSavePng = async () => {
     const result = await bridge.invokePlugin('testSavePng');
+    console.log('result', result);
+  };
+
+  handleCutActiveLayer = async () => {
+    const result = await bridge.invokePlugin('cutActiveLayer');
+    console.log('result', result);
+  };
+
+  handleCutSelectedLayer = async () => {
+    const result = await bridge.invokePlugin('cutSelectedLayer');
+    console.log('result', result);
+  };
+
+  handleMergeLayer = async () => {
+    const result = await bridge.invokePlugin('mergeLayer');
+    console.log('result', result);
+  };
+
+  getLayerById = async () => {
+    const result = await bridge.invokePlugin('getLayerById', '23');
     console.log('result', result);
   };
 }

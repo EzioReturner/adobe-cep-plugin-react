@@ -11,8 +11,16 @@ import './upload.less';
 const { Option } = Select;
 
 const Upload: React.FC = () => {
-  const { documents, activeDocument, handleChangeDocument, handleGetLayers, handleSavePng } =
-    materialStore;
+  const {
+    documents,
+    activeDocument,
+    handleChangeDocument,
+    handleGetLayers,
+    handleSavePng,
+    handleCutSelectedLayer,
+    getLayerById,
+    handleMergeLayer
+  } = materialStore;
 
   return (
     <section className="material-upload">
@@ -41,11 +49,17 @@ const Upload: React.FC = () => {
         ))}
       </Select>
 
-      <Button type="primary" onClick={handleGetLayers}>
+      {/* <Button type="primary" onClick={handleGetLayers}>
         getLayers
       </Button>
 
-      <Button onClick={handleSavePng}>savePng</Button>
+      <Button onClick={handleSavePng}>savePng</Button> */}
+
+      <Button onClick={handleCutSelectedLayer}>一键切图</Button>
+
+      {/* <Button onClick={handleMergeLayer}>mergeLayer</Button>
+
+      <Button onClick={getLayerById}>getLayerById</Button> */}
     </section>
   );
 };
