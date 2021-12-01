@@ -15,8 +15,8 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    margin-top: 110px;
-    margin-bottom: 40px;
+    margin-top: @spacing-middle;
+    margin-bottom: @spacing-large;
 
     &>div {
       display: flex;
@@ -47,8 +47,40 @@
     }
   }
 
-  .material-select {
-    width: 300px;
+  .form-row {
+    display: flex;
+    align-items: center;
     margin-bottom: @spacing-large;
+
+    &>span:first-child {
+      flex-shrink: 0;
+      margin-right: @spacing-normal;
+      width: 60px;
+    }
+  }
+
+  .material-select {
+    width: 200px;
+  }
+}
+
+.tabs-item {
+  width: 80px;
+  text-align: center;
+}
+
+.material-cut {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  .materil-cut-tips {
+    margin: @spacing-large 0;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .materil-cut-button {
+    width: 240px;
   }
 }

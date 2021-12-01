@@ -12,7 +12,7 @@ const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const { library, libVersion } = require('../package.json');
 const {
   log_progress,
-  copyAdobeFiles,
+  copyHostFiles,
   copyPublicFileToFolder,
   generateManifest,
   checkRunError,
@@ -42,7 +42,7 @@ rm(DIST_FOLDER, async function (err) {
 
         copyPublicFileToFolder();
 
-        copyAdobeFiles();
+        copyHostFiles();
 
         generateManifest();
 

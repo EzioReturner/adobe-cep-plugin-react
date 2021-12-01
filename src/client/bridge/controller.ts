@@ -41,8 +41,10 @@ class Controller {
   }
 
   loadJsxFiles() {
-    this.scriptLoader?.loadJSX('tools.jsx');
     this.scriptLoader?.loadJSX('JSON.jsx');
+    this.scriptLoader?.loadJSX('get.jsx');
+    this.scriptLoader?.loadJSX('tools.jsx');
+    this.scriptLoader?.loadJSX('actions.jsx');
   }
 
   invokePlugin(functionName: string, params?: string) {
@@ -64,14 +66,14 @@ class Controller {
   async getActiveDocument() {
     const active = await this.invokePlugin('getActiveDocument');
 
-    materialStore.setActiveDocument(active);
+    materialStore.dispatchSetActiveDocument(active);
   }
 
   /**
    * @NAME 切换激活文档
    */
-  async setActiveDocument(name: string) {
-    await this.invokePlugin('setActiveDocument', name);
+  async dispatchSetActiveDocument(name: string) {
+    await this.invokePlugin('dispatchSetActiveDocument', name);
   }
 }
 

@@ -67,7 +67,7 @@ const Login: React.FC = () => {
     //     history.push('/material/upload');
     //   }, 2000);
     // }
-    // bridge.invokePlugin('creatNewDocument', {
+    // bridge.invokePlugin('dispatchCreatNewDocument', {
     //   height: 100,
     //   width: 100,
     //   resolution: 75,
@@ -83,7 +83,7 @@ const Login: React.FC = () => {
   };
 
   const handleInvoke = () => {
-    // bridge.invokePlugin('creatNewDocument', {
+    // bridge.invokePlugin('dispatchCreatNewDocument', {
     //   height: 100,
     //   width: 100,
     //   resolution: 75,

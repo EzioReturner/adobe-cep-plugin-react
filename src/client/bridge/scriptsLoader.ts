@@ -6,7 +6,9 @@ class ScriptLoader {
 
   cs: CSInterfaceInstance = {} as CSInterfaceInstance;
 
-  extensionId?: string = '';
+  extensionId: string = '';
+
+  extensionDirectory: string = '';
 
   constructor() {
     this.init();
@@ -16,6 +18,8 @@ class ScriptLoader {
     this.cs = new window.CSInterface();
 
     this.extensionId = this.cs.getExtensionID();
+
+    this.extensionDirectory = this.cs.getSystemPath(window.SystemPath.EXTENSION);
 
     this.initFlyoutMenu();
   }
@@ -110,7 +114,7 @@ class ScriptLoader {
   }
 
   loadJSX(fileName: string) {
-    var extensionRoot = this.cs.getSystemPath(window.SystemPath.EXTENSION) + '/host/';
+    var extensionRoot = this.extensionDirectory + '/host/';
 
     this.cs.evalScript('$.evalFile("' + extensionRoot + fileName + '")');
   }

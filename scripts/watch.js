@@ -13,7 +13,7 @@ const { deploy } = require('./deploy');
 
 const {
   log_progress,
-  copyAdobeFiles,
+  copyHostFiles,
   copyPublicFileToFolder,
   generateManifest,
   checkRunError,
@@ -32,7 +32,7 @@ rm(DIST_FOLDER, async function (err) {
 
   copyPublicFileToFolder();
 
-  copyAdobeFiles();
+  copyHostFiles();
 
   generateManifest();
 
@@ -69,6 +69,7 @@ function runWatch(config) {
         if (err) {
           reject(err);
         } else {
+          checkRunError(stats);
           // checkRunError(stats);
           resolve(stats);
         }

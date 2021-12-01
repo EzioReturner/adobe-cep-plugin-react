@@ -14,6 +14,8 @@ const ADOBE_ASSETS_PATH = path.join(paths.appPath, 'assets');
 
 const ADOBE_HOST_PATH = path.join(paths.appSrc, 'host');
 
+const ADOBE_SERVER_PATH = path.join(paths.appSrc, 'server');
+
 const ADOBE_LIBS_PATH = path.join(paths.appSrc, 'libs');
 
 const DIST_FOLDER = paths.distFolder;
@@ -34,9 +36,23 @@ function generateDebugFile() {
   }
 }
 
-function copyAdobeFiles() {
+function copyHostFiles() {
   log_progress('[info]: copying host files...\n');
-  copyRecursiveSync(ADOBE_HOST_PATH, path.join(DIST_FOLDER, 'host'));
+  copyRecursiveSync(ADOBE_HOST_PATH, path.join(DIST_FOLDER, 'host'), [
+    'package.json',
+    'yarn.lock',
+    'package-lock.json',
+    'node_modules'
+  ]);
+
+  log_progress('[info]: copying host node_modules...\n');
+  copyRecursiveSync(
+    path.join(ADOBE_HOST_PATH, 'node_modules'),
+    path.join(DIST_FOLDER, 'node_modules')
+  );
+
+  log_progress('[info]: copying server files...\n');
+  copyRecursiveSync(ADOBE_SERVER_PATH, path.join(DIST_FOLDER, 'server'));
 
   log_progress('[info]: copying libs files...\n');
   copyRecursiveSync(ADOBE_LIBS_PATH, path.join(DIST_FOLDER, 'libs'));
@@ -173,7 +189,7 @@ module.exports = {
   resolveWindows,
   resolveEnv,
   generateDebugFile,
-  copyAdobeFiles,
+  copyHostFiles,
   generateManifest,
   checkRunError,
   copyPublicFileToFolder
