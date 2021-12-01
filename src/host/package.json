@@ -12,8 +12,8 @@
     "@koa/router": "^10.1.1",
     "koa": "^2.13.4",
     "mime-types": "^2.1.34",
+    "rimraf": "^3.0.2",
     "stream-to-array": "^2.3.0",
-    "stream-wormhole": "^1.1.0",
-    "rimraf": "^3.0.2"
+    "stream-wormhole": "^1.1.0"
   }
 }

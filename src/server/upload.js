@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const sendToWormhole = require('stream-wormhole');
 const streamToArray = require('stream-to-array');
 const http = require('http');
@@ -49,19 +48,18 @@ function upload(ctx) {
     const req = _http.request(options, function (res) {
       const list = [];
       res.on('data', function (data) {
-        console.log('upload_file', `data=${data}`);
+        // console.log('upload_file', `data=${data}`);
         list.push(data);
       });
       res.on('end', async function () {
         const body = Buffer.concat(list).toString('utf8');
-        // 最好是把流处理掉
         sendToWormhole(fileStream);
-        console.log('upload_file', `end=${body + ''}`);
-        console.log('fileupload status code=', res.statusCode, 'result=', body + '');
+        // console.log('upload_file', `end=${body + ''}`);
+        // console.log('fileupload status code=', res.statusCode, 'result=', body + '');
         resolve ? resolve(body + '') : '';
       });
     });
-    console.log('upload_file', 'start');
+    // console.log('upload_file', 'start');
     req.write(startData);
 
     streamToArray(fileStream).then(function (parts) {
@@ -69,10 +67,10 @@ function upload(ctx) {
       for (let i = 0, l = parts.length; i < l; ++i) {
         part = parts[i];
         req.write(part instanceof Buffer ? part : new Buffer(part));
-        console.log('upload_file', `write ${i}`);
+        // console.log('upload_file', `write ${i}`);
       }
       req.end(endData);
-      console.log('upload_file', 'end');
+      // console.log('upload_file', 'end');
     });
 
     req.on('error', function (e) {

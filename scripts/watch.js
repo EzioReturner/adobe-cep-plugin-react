@@ -72,6 +72,7 @@ function runWatch(config) {
           process.stdout.write(stats.toString() + '\n');
           log_progress('[result]: build failed with errors.\n');
           // checkRunError(stats);
+          // checkRunError(stats);
           resolve(stats);
         }
       }

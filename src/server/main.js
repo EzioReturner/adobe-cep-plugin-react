@@ -7,8 +7,6 @@ const rm = require('rimraf');
 
 function upload(ctx) {
   return streamUpload(ctx).then(res => {
-    console.log('res', res);
-
     ctx.response.status = 200;
 
     ctx.response.body = res;
@@ -48,6 +46,8 @@ function run() {
   app.use(router.routes());
 
   app.listen(port);
+
+  return 'app running';
 }
 
 module.exports = run;

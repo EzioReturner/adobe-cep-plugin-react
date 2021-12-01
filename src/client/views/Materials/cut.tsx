@@ -1,9 +1,9 @@
 import React from 'react';
-import { Select, Button, Tabs } from 'antd';
+import { Button } from 'antd';
 import { materialStore } from '@/store/materialStore';
 
 const Cut: React.FC = () => {
-  const { handleCutSelectedLayer } = materialStore;
+  const { handleCutSelectedLayer, activeDocument } = materialStore;
 
   return (
     <section className="material-cut">
@@ -12,6 +12,7 @@ const Cut: React.FC = () => {
         className="materil-cut-button"
         type="primary"
         shape="round"
+        disabled={!activeDocument}
         onClick={handleCutSelectedLayer}
       >
         标记为切图

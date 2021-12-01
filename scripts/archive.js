@@ -88,7 +88,7 @@ function prepareCert() {
  *
  * @return {Promise}  a promise
  */
-function signPackage(cert) {
+async function signPackage(cert) {
   const options = {
     input: pluginFolder,
     output: zxpFile,
@@ -96,7 +96,7 @@ function signPackage(cert) {
     password: cert.password
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     zxpSignCmd.sign(options, function (error, result) {
       if (error) reject(error);
       else resolve(result);

@@ -1,4 +1,5 @@
 import { materialStore } from '@/store/materialStore';
+import { message } from 'antd';
 import events from './events';
 
 class Controller {
@@ -14,8 +15,6 @@ class Controller {
    */
   async init() {
     console.log('client controller is initing...');
-
-    // if (process.env.NODE_ENV !== 'development' && process.env.MODE !== 'watch') return;
 
     await this.loadScriptLoader();
 
@@ -57,7 +56,7 @@ class Controller {
   async getDocuments() {
     const list = await this.invokePlugin('getDocuments');
 
-    materialStore.setDocuments(list?.split(',') || []);
+    list && materialStore.setDocuments(list?.split(','));
   }
 
   /**
@@ -66,7 +65,7 @@ class Controller {
   async getActiveDocument() {
     const active = await this.invokePlugin('getActiveDocument');
 
-    materialStore.dispatchSetActiveDocument(active);
+    active && materialStore.dispatchSetActiveDocument(active);
   }
 
   /**

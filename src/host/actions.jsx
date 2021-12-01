@@ -16,7 +16,7 @@ function dispatchSetActiveDocument(name) {
   return 'success';
 }
 
-function dispatchTestSavePng() {
+function dispatchSavePng() {
   try {
     var doc = app.activeDocument;
 

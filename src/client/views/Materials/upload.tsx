@@ -13,8 +13,14 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 const MaterialUpload: React.FC = () => {
-  const { documents, activeDocument, handleChangeDocument, uploading, handleUpload } =
-    materialStore;
+  const {
+    documents,
+    activeDocument,
+    handleChangeDocument,
+    uploading,
+    handleUpload,
+    uploadServerUrl
+  } = materialStore;
 
   const Upload = (
     <section className="material-upload">
@@ -33,7 +39,7 @@ const MaterialUpload: React.FC = () => {
       <div className="form-row">
         <span className="form-label">当前设计:</span>
         <Select
-          placeholder="请选择文件"
+          placeholder="请选择设计"
           className="material-select"
           value={activeDocument}
           dropdownMatchSelectWidth={false}
@@ -49,16 +55,23 @@ const MaterialUpload: React.FC = () => {
 
       <div className="form-row">
         <span className="form-label">项目:</span>
-        <Select placeholder="请选择项目" className="material-select"></Select>
+        <Select disabled placeholder="请选择项目" className="material-select"></Select>
       </div>
 
-      {/* <Button onClick={importDoc}>importDoc</Button> */}
+      {uploadServerUrl && (
+        <div className="form-row upload-server-url">
+          <span className="form-label">服务器url:</span>
+          <div>{uploadServerUrl}</div>
+        </div>
+      )}
 
       <Button
         loading={uploading}
-        style={{ width: '120px', marginTop: '24px' }}
+        style={{ width: '130px', marginTop: '24px' }}
         type="primary"
+        shape="round"
         onClick={handleUpload}
+        disabled={!activeDocument}
       >
         {uploading ? '上传中...' : '上传'}
       </Button>

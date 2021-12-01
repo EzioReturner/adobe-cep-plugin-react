@@ -57,10 +57,27 @@
       margin-right: @spacing-normal;
       width: 60px;
     }
+
+    .material-select {
+      width: 200px;
+    }
   }
 
-  .material-select {
-    width: 200px;
+
+  .upload-server-url {
+    margin: 0 @spacing-large;
+
+    &>span:first-child {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    &>div:last-child {
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-all;
+      width: 200px;
+    }
   }
 }
 

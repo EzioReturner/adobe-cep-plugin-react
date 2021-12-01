@@ -33,7 +33,12 @@ class Events {
    */
   listenDocumentActive() {
     controller.scriptLoader?.addEventListener('documentAfterActivate', (event: any) => {
-      // console.log('documentAfterActivate', event);
+      console.log('documentAfterActivate', event);
+      controller.getDocuments();
+
+      if (!materialStore.activeDocument) {
+        controller.getActiveDocument();
+      }
     });
   }
 

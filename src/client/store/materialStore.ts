@@ -7,13 +7,22 @@ configure({ enforceActions: 'observed' });
 class MaterialStore {
   @observable documents: string[] = [];
 
-  @observable activeDocument: string = '';
+  @observable activeDocument: string | undefined = undefined;
 
   @observable topLayers: string[] = [];
 
   @observable selectedLayers: number[] = [];
 
   @observable uploading: boolean = false;
+
+  @observable uploadServerUrl: string | null = null;
+
+  @observable scriptOnloaded: boolean = false;
+
+  @action
+  setScriptOnloaded = (onloaded: boolean) => {
+    this.scriptOnloaded = onloaded;
+  };
 
   @action
   setDocuments = (documents: string[]) => {
@@ -28,6 +37,8 @@ class MaterialStore {
   @action
   handleChangeDocument = (doc: string) => {
     this.activeDocument = doc;
+
+    this.uploadServerUrl = null;
 
     bridge.dispatchSetActiveDocument(doc);
   };
@@ -45,7 +56,7 @@ class MaterialStore {
   };
 
   handleSavePng = async () => {
-    const result = await bridge.invokePlugin('dispatchTestSavePng');
+    const result = await bridge.invokePlugin('dispatchSavePng');
     console.log('result', result);
   };
 
@@ -89,21 +100,27 @@ class MaterialStore {
   handleUpload = async () => {
     this.uploading = true;
 
-    const result = await bridge.invokePlugin('dispatchTestSavePng');
+    this.uploadServerUrl = null;
+
+    const result = await bridge.invokePlugin('dispatchSavePng');
 
     if (result) {
       const [path, docName] = result.split('/,/');
-      io.get('http://localhost:7701/upload', {
+      io.get(`http://localhost:7701/upload`, {
         params: {
           path,
           docName
         }
       })
         .then(res => {
-          const { status, msg } = res;
+          const { status, msg, re } = res;
 
           if (status === 0 && msg === 'SUCCESS') {
             message.success('上传成功');
+
+            runInAction(() => {
+              this.uploadServerUrl = re.url;
+            });
           } else {
             console.log(status, msg);
           }
