@@ -15,7 +15,7 @@ class Controller {
   async init() {
     console.log('client controller is initing...');
 
-    if (process.env.NODE_ENV !== 'development' && process.env.MODE !== 'watch') return;
+    // if (process.env.NODE_ENV !== 'development' && process.env.MODE !== 'watch') return;
 
     await this.loadScriptLoader();
 
