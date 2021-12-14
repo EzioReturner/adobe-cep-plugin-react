@@ -73,7 +73,7 @@ module.exports = function () {
                     ...getThemeVariables({
                       dark: true
                     }),
-                    '@primary-color': '#ad73f7'
+                    '@primary-color': '#57a6f8'
                   }
                 }
               : undefined

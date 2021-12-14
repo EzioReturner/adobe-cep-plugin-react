@@ -44,7 +44,7 @@ const resolveModule = (resolveFn, filePath) => {
 };
 
 const getServedPath = () => {
-  switch (process.env.NODE_ENV) {
+  switch (process.env.NODE_LUCKY_ENV) {
     default:
       return 'client-dist/';
   }
@@ -55,6 +55,7 @@ const DIST_FOLDER_PATH = path.join(pluginConfig.destinationFolder, pluginConfig.
 // config after eject: we're in ./config/
 module.exports = {
   distFolder: DIST_FOLDER_PATH,
+  distExtensionFloder: DIST_FOLDER_PATH,
   distClientFolder: path.resolve(DIST_FOLDER_PATH, 'client-dist'),
   appBuildDist: resolveApp('dist/'),
   dotenv: resolveApp('.env'),
