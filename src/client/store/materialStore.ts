@@ -2,6 +2,7 @@ import { observable, configure, action, runInAction } from 'mobx';
 import { message } from 'antd';
 import bridge from '@/bridge/controller';
 import io from '@api/io';
+import { userStore } from './userStore';
 
 configure({ enforceActions: 'observed' });
 class MaterialStore {
@@ -15,14 +16,13 @@ class MaterialStore {
 
   @observable uploading: boolean = false;
 
-  @observable uploadServerUrl: string | null = null;
-
   @observable scriptOnloaded: boolean = false;
 
-  @action
-  setScriptOnloaded = (onloaded: boolean) => {
-    this.scriptOnloaded = onloaded;
-  };
+  @observable materialList: StoreKeyValue[] = [];
+
+  @observable selectedMaterial: string | undefined = undefined;
+
+  @observable loadingList: boolean = false;
 
   @action
   setDocuments = (documents: string[]) => {
@@ -38,8 +38,6 @@ class MaterialStore {
   handleChangeDocument = (doc: string) => {
     this.activeDocument = doc;
 
-    this.uploadServerUrl = null;
-
     bridge.dispatchSetActiveDocument(doc);
   };
 
@@ -48,20 +46,18 @@ class MaterialStore {
     this.selectedLayers = layerIds;
   };
 
-  handleGetLayers = async () => {
-    const result = await bridge.invokePlugin('getLayers');
+  @action
+  loadMaterialList = () => {
+    this.loadingList = true;
+  };
 
-    this.topLayers = result.split(',');
-    console.log('result', result);
+  @action
+  setSelectedMaterial = (val: string) => {
+    this.selectedMaterial = val;
   };
 
   handleSavePng = async () => {
     const result = await bridge.invokePlugin('dispatchSavePng');
-    console.log('result', result);
-  };
-
-  handleCutActiveLayer = async () => {
-    const result = await bridge.invokePlugin('dispatchCutActiveLayer');
     console.log('result', result);
   };
 
@@ -71,16 +67,6 @@ class MaterialStore {
     if (result === 'null') {
       message.error('请选择图层');
     }
-    console.log('result', result);
-  };
-
-  handleMergeLayer = async () => {
-    const result = await bridge.invokePlugin('dispatchMergeLayer');
-    console.log('result', result);
-  };
-
-  getLayerById = async () => {
-    const result = await bridge.invokePlugin('getLayerById', '23');
     console.log('result', result);
   };
 
@@ -100,9 +86,11 @@ class MaterialStore {
   handleUpload = async () => {
     this.uploading = true;
 
-    this.uploadServerUrl = null;
-
     const result = await bridge.invokePlugin('dispatchSavePng');
+
+    console.log('save image path:', result);
+
+    // message.info(result);
 
     if (result) {
       const [path, docName] = result.split('/,/');
@@ -113,17 +101,12 @@ class MaterialStore {
         }
       })
         .then(res => {
-          const { status, msg, re } = res;
+          const { msg } = res;
 
-          if (status === 0 && msg === 'SUCCESS') {
-            message.success('上传成功');
-
-            runInAction(() => {
-              this.uploadServerUrl = re.url;
-            });
-          } else {
-            console.log(status, msg);
-          }
+          message.success(msg);
+        })
+        .catch(err => {
+          message.error(err);
         })
         .finally(() => {
           this.removeSavePng(path);
@@ -133,6 +116,8 @@ class MaterialStore {
 
   @action
   removeSavePng = async (path: string) => {
+    console.log('remove path: ', path);
+
     io.get('http://localhost:7701/removeFile', {
       params: {
         path
@@ -140,6 +125,9 @@ class MaterialStore {
     })
       .then(res => {
         console.log(res);
+      })
+      .catch(err => {
+        message.error(err);
       })
       .finally(() => {
         runInAction(() => {

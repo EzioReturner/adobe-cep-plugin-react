@@ -43,6 +43,9 @@ declare interface Window {
     new (type?: string, scope?: string): CSEventInstance;
   };
   SystemPath: any;
+  cep_node: {
+    require(path: string): any;
+  };
 }
 
 // declare interface CSInterfaceInstance {

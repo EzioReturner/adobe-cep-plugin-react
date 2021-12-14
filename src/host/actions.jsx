@@ -22,7 +22,7 @@ function dispatchSavePng() {
 
     var docName = doc.name + '-1.png';
 
-    var path = doc.path + '/' + docName;
+    var path = Folder.desktop + '/' + docName;
 
     var pngfile = new File(path);
 

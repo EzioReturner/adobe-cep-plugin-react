@@ -1,3 +1,5 @@
+import { message } from 'antd';
+
 /**
  * load jsx scripts dynamically
  */
@@ -119,7 +121,7 @@ class ScriptLoader {
     this.cs.evalScript('$.evalFile("' + extensionRoot + fileName + '")');
   }
 
-  invokeScript(functionName: string, params: string) {
+  invokeScript(functionName: string, params?: string): Promise<string> {
     var params_string = params ? JSON.stringify(params) : '';
 
     var eval_string = `${functionName}(${params_string})`;
@@ -133,15 +135,20 @@ class ScriptLoader {
         if (typeof eval_res === 'string') {
           if (eval_res.toLowerCase().indexOf('error') != -1) {
             that.log(`err eval: ${functionName}`);
+
+            // message.error(`err eval: ${functionName}`);
+
             reject(eval_res);
 
-            return;
+            return eval_res;
           }
         }
 
+        // message.success(`success eval: ${functionName}`);
+
         that.log(`success eval: ${functionName}`);
         resolve(eval_res);
-        return;
+        return eval_res;
       };
 
       that.cs.evalScript(eval_string, callback);
@@ -160,5 +167,7 @@ class ScriptLoader {
 var scriptLoader = new ScriptLoader();
 
 window.bridge = scriptLoader;
+
+export { ScriptLoader };
 
 export default scriptLoader;

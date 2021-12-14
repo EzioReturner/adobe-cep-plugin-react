@@ -44,7 +44,7 @@ const resolveModule = (resolveFn, filePath) => {
 };
 
 const getServedPath = () => {
-  switch (process.env.NODE_LUCKY_ENV) {
+  switch (process.env.NODE_ENV) {
     default:
       return 'client-dist/';
   }

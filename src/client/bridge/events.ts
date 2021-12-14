@@ -23,7 +23,7 @@ class Events {
   }
 
   registerHostEvent() {
-    process.env.NODE_ENV === 'production' && controller.scriptLoader?.registerPersistent();
+    // process.env.NODE_ENV === 'production' && controller.scriptLoader?.registerPersistent();
 
     controller.scriptLoader?.registerHostEvent(`${CREATE_CODE}, ${SELECT_CODE}`);
   }
@@ -43,8 +43,8 @@ class Events {
   }
 
   listenLog() {
-    controller.scriptLoader?.addEventListener('event_log', (event: any) => {
-      console.log('event_log', event);
+    controller.scriptLoader?.addEventListener('ra_event_log', (event: any) => {
+      console.log('ra_event_log', event);
     });
   }
 

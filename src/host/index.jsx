@@ -31,7 +31,7 @@ $._ext = {
 
 function dispatch(message) {
   var eventObj = new CSXSEvent();
-  eventObj.type = 'event_log';
+  eventObj.type = 'ra_event_log';
   eventObj.data = message;
   eventObj.dispatch();
 }

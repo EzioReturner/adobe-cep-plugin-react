@@ -12,7 +12,9 @@ class Request {
   instance: AxiosInstance;
 
   constructor() {
-    this.instance = Axios.create();
+    this.instance = Axios.create({
+      timeout: 15000
+    });
     this.initInterceptors();
   }
 
@@ -55,7 +57,7 @@ class Request {
       case 500:
         break;
       default:
-        this.notify(message || error);
+        this.notify(JSON.stringify(message || error));
         break;
     }
     return Promise.reject(error);
@@ -63,6 +65,7 @@ class Request {
 
   sendRequest(method: Method, url: string, details: IoOptions) {
     const { params, returnConfig, data, options } = details;
+
     return this.instance
       .request({
         url,

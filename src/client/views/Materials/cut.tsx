@@ -12,7 +12,7 @@ const Cut: React.FC = () => {
         className="materil-cut-button"
         type="primary"
         shape="round"
-        disabled={!activeDocument}
+        disabled
         onClick={handleCutSelectedLayer}
       >
         标记为切图

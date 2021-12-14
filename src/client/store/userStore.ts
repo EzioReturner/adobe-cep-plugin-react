@@ -1,6 +1,7 @@
 import { action, configure, observable, computed } from 'mobx';
 import { layoutStore } from './layoutStore';
 import intersection from 'lodash/intersection';
+import io from '@api/io';
 
 type IdentifyStatus = 'identifying' | 'identifyPass' | 'unauthorized';
 
@@ -9,9 +10,11 @@ class UserStore {
   // 用户信息
   @observable userInfo: any = {};
   // 用户权限码
-  @observable authority: string[] = ['admin'];
+  @observable authority: string[] = [];
   // 当前的验证状态
   @observable identifyStatus: IdentifyStatus = 'identifying';
+
+  @observable userToken: string | null = null;
 
   constructor() {
     this.initUserInfo();
@@ -37,10 +40,36 @@ class UserStore {
     return '';
   }
 
+  @action
   initUserInfo = () => {
+    const cookie = window.localStorage.getItem('lk-authority');
+
+    if (cookie) {
+      this.setUserToken(cookie);
+    } else {
+      this.identifyStatus = 'unauthorized';
+    }
     // setTimeout(() => {
     //   this.setAuthority(['admin']);
     // }, 1000);
+  };
+
+  @action
+  setUserToken = (token: string) => {
+    this.userToken = token;
+    this.identifyStatus = 'identifyPass';
+    this.authority = ['admin'];
+    window.localStorage.setItem('lk-authority', token);
+
+    io.setHeader('SMARKET-AUTH-TOKEN', token);
+  };
+
+  @action
+  clearUserToken = () => {
+    this.userToken = null;
+    this.identifyStatus = 'unauthorized';
+    this.authority = [];
+    window.localStorage.removeItem('lk-authority');
   };
 
   // 获取用户权限

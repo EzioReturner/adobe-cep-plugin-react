@@ -12,7 +12,7 @@ export const constantRouteConfig: { app: RouteRoot; user: RouteRoot } = {
       {
         name: 'login',
         path: '/user/login',
-        component: '/views/Login'
+        component: '/views/Login/UnionAuth'
       }
     ]
   }
@@ -32,7 +32,7 @@ export const asyncRouteConfig: RouteChild[] = [
       {
         name: 'upload',
         path: '/material/upload',
-        component: '/views/Materials/upload'
+        component: '/views/Materials/Upload'
       }
     ]
   },

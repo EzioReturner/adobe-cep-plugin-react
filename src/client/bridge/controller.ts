@@ -1,13 +1,13 @@
 import { materialStore } from '@/store/materialStore';
-import { message } from 'antd';
 import events from './events';
-
+import { ScriptLoader } from './scriptsLoader';
+import { userStore } from '@store/userStore';
 class Controller {
   constructor() {
     this.init();
   }
 
-  scriptLoader: any = null;
+  scriptLoader: ScriptLoader | null = null;
 
   /**
    * init - session
@@ -27,6 +27,21 @@ class Controller {
     this.getDocuments();
 
     this.getActiveDocument();
+
+    this.startServer();
+  }
+
+  startServer() {
+    if (this.scriptLoader?.extensionDirectory && userStore.userToken) {
+      console.log('server starting...');
+
+      let localServer = window.cep_node.require(
+        this.scriptLoader.extensionDirectory + '/server/main.js'
+      );
+
+      var r = localServer();
+      console.log(r);
+    }
   }
 
   async loadScriptLoader() {

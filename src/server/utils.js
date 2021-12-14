@@ -1,4 +1,5 @@
 const path = require('path');
+const homeDir = require('os').homedir();
 
 function formatPath(ctx, _path) {
   const { header } = ctx;
@@ -7,11 +8,9 @@ function formatPath(ctx, _path) {
 
   const isMac = agent.indexOf('Mac OS X') > -1;
 
-  if (isMac) {
-    const prefix = `${path.resolve(__dirname).split('/').slice(0, 3).join('/')}`;
+  _path = _path.replace('~', homeDir);
 
-    _path = _path.replace('~', prefix);
-  } else {
+  if (!isMac) {
     _path = path.normalize(_path);
   }
 

@@ -9,9 +9,15 @@ const { formatPath } = require('./utils');
 function upload(ctx) {
   const { query } = ctx;
 
+  console.log('[server]: on uploading');
+
   let { path: _path, docName } = query;
 
+  console.log('[server]: berfore format path', _path);
+
   _path = formatPath(ctx, _path);
+
+  console.log('[server]: formated path', _path);
 
   const fileType = mime.lookup(_path);
 
@@ -25,7 +31,7 @@ function upload(ctx) {
     '--' +
     `${boundaryKey}\r\n` +
     `Content-Type: ${fileType}\r\n` +
-    `Content-Disposition: form-data; name="picture"; filename="${docName}"\r\n` +
+    `Content-Disposition: form-data; name="uploadFile"; filename="${docName}"\r\n` +
     'Content-Transfer-Encoding: binary\r\n\r\n';
 
   const endData = '\r\n--' + boundaryKey + '--';
@@ -34,14 +40,16 @@ function upload(ctx) {
     host: '',
     port: 80,
     method: 'POST',
-    path: '',
+    path: ``,
     headers: {
-      'SMARKET-AUTH-TOKEN': 123456,
+      'SMARKET-AUTH-TOKEN': 'pocketadmin987321',
       'Content-Type': 'multipart/form-data; boundary=' + boundaryKey + '',
       'Content-Length': Buffer.byteLength(startData) + Buffer.byteLength(endData) + fileLength,
       'Transfer-Encoding': 'chunked'
     }
   };
+
+  console.log('[server]: options', options);
 
   return new Promise((resolve, reject) => {
     const _http = options.port === 443 ? https : http;
@@ -49,11 +57,14 @@ function upload(ctx) {
       const list = [];
       res.on('data', function (data) {
         // console.log('upload_file', `data=${data}`);
+        console.log('[server]: res on data');
         list.push(data);
       });
       res.on('end', async function () {
         const body = Buffer.concat(list).toString('utf8');
         sendToWormhole(fileStream);
+
+        console.log('[server]: res end data');
         // console.log('upload_file', `end=${body + ''}`);
         // console.log('fileupload status code=', res.statusCode, 'result=', body + '');
         resolve ? resolve(body + '') : '';
@@ -61,6 +72,8 @@ function upload(ctx) {
     });
     // console.log('upload_file', 'start');
     req.write(startData);
+
+    console.log('[server]: request already send');
 
     streamToArray(fileStream).then(function (parts) {
       let part = null;
@@ -74,7 +87,7 @@ function upload(ctx) {
     });
 
     req.on('error', function (e) {
-      ctx.app.logger.info('upload_file', 'error');
+      console.log('upload error', e);
       reject ? reject(e) : '';
     });
   });
