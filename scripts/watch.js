@@ -20,12 +20,12 @@ const {
   generateDebugFile
 } = require('./utils.js');
 
-const DIST_FOLDER = paths.distFolder;
+const APP_BUILD_DIST = paths.appBuildDist;
 
 const spinner = ora({ color: 'green', text: 'building for client...' });
 
 // build app
-rm(DIST_FOLDER, async function (err) {
+rm(APP_BUILD_DIST, async function (err) {
   if (err) throw err;
 
   await watchClient();
@@ -68,9 +68,9 @@ function runWatch(config) {
 
         if (err) {
           reject(err);
-        } else {
           process.stdout.write(stats.toString() + '\n');
           log_progress('[result]: build failed with errors.\n');
+        } else {
           // checkRunError(stats);
           // checkRunError(stats);
           resolve(stats);

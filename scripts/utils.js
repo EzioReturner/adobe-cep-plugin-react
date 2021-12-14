@@ -18,7 +18,7 @@ const ADOBE_SERVER_PATH = path.join(paths.appSrc, 'server');
 
 const ADOBE_LIBS_PATH = path.join(paths.appSrc, 'libs');
 
-const DIST_FOLDER = paths.distFolder;
+const DIST_EXTENSION_FOLDER = paths.distExtensionFloder;
 
 const ADOBE_TEMPLATES_PATH = path.join(ADOBE_ASSETS_PATH, 'templates');
 
@@ -31,14 +31,14 @@ function generateDebugFile() {
     log_progress('[info]: generating .debug file...\n');
     var debug_template = require(path.join(ADOBE_TEMPLATES_PATH, '.debug.template.js'));
     var rendered_debug = debug_template(pluginConfig);
-    var debug_out_file = path.join(DIST_FOLDER, '.debug');
+    var debug_out_file = path.join(DIST_EXTENSION_FOLDER, '.debug');
     fs.writeFileSync(debug_out_file, rendered_debug, 'utf-8');
   }
 }
 
 function copyHostFiles() {
   log_progress('[info]: copying host files...\n');
-  copyRecursiveSync(ADOBE_HOST_PATH, path.join(DIST_FOLDER, 'host'), [
+  copyRecursiveSync(ADOBE_HOST_PATH, path.join(DIST_EXTENSION_FOLDER, 'host'), [
     'package.json',
     'yarn.lock',
     'package-lock.json',
@@ -48,17 +48,17 @@ function copyHostFiles() {
   log_progress('[info]: copying host node_modules...\n');
   copyRecursiveSync(
     path.join(ADOBE_HOST_PATH, 'node_modules'),
-    path.join(DIST_FOLDER, 'node_modules')
+    path.join(DIST_EXTENSION_FOLDER, 'node_modules')
   );
 
   log_progress('[info]: copying server files...\n');
-  copyRecursiveSync(ADOBE_SERVER_PATH, path.join(DIST_FOLDER, 'server'));
+  copyRecursiveSync(ADOBE_SERVER_PATH, path.join(DIST_EXTENSION_FOLDER, 'server'));
 
   log_progress('[info]: copying libs files...\n');
-  copyRecursiveSync(ADOBE_LIBS_PATH, path.join(DIST_FOLDER, 'libs'));
+  copyRecursiveSync(ADOBE_LIBS_PATH, path.join(DIST_EXTENSION_FOLDER, 'libs'));
 
   log_progress('[info]: copying Adobe assets...\n');
-  copyRecursiveSync(ADOBE_ASSETS_PATH, DIST_FOLDER, ['templates']);
+  copyRecursiveSync(ADOBE_ASSETS_PATH, DIST_EXTENSION_FOLDER, ['templates']);
 }
 
 function generateManifest() {
@@ -67,12 +67,12 @@ function generateManifest() {
   var manifest_template = require(path.join(ADOBE_TEMPLATES_PATH, 'manifest.template.xml.js'));
   var rendered_xml = manifest_template(pluginConfig);
 
-  var xml_out_dir = path.join(DIST_FOLDER, 'CSXS');
+  var xml_out_dir = path.join(DIST_EXTENSION_FOLDER, 'CSXS');
   fs.mkdir(xml_out_dir, { recursive: true }, err => {
     if (err) throw err;
   });
 
-  var xml_out_file = path.join(DIST_FOLDER, 'CSXS', 'manifest.xml');
+  var xml_out_file = path.join(DIST_EXTENSION_FOLDER, 'CSXS', 'manifest.xml');
   fs.writeFileSync(xml_out_file, rendered_xml, 'utf-8');
 }
 
@@ -85,7 +85,7 @@ function checkRunError(stats, force) {
 }
 
 function copyPublicFileToFolder() {
-  fsExtra.copySync(paths.appPublic, DIST_FOLDER, {
+  fsExtra.copySync(paths.appPublic, DIST_EXTENSION_FOLDER, {
     dereference: true,
     filter: file => file !== paths.appHtml
   });

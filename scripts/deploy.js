@@ -9,7 +9,7 @@ const utils = require('./utils.js');
 const pluginConfig = require('../pluginrc.js');
 const paths = require('../webpack/paths');
 
-const DIST_FOLDER = paths.distFolder;
+const DIST_EXTENSION_FOLDER = paths.distExtensionFloder;
 const env = utils.resolveEnv();
 const isDev = env === 'development';
 const isWindows = utils.resolveWindows();
@@ -58,7 +58,7 @@ function resolveExtensionFolder() {
 
     return extensionsPath;
   } else {
-    return path.join(os.homedir(), 'Library/Application Support/Adobe/CEP/extensions');
+    return path.join('/Library/Application Support/Adobe/CEP/extensions');
   }
 }
 
@@ -95,6 +95,9 @@ function deployDevMode() {
     } else {
       execSync('defaults write com.adobe.CSXS.8 PlayerDebugMode 1', { stdio: [0, 1, 2] }); // CC 2018
       execSync('defaults write com.adobe.CSXS.9 PlayerDebugMode 1', { stdio: [0, 1, 2] }); // CC 2019 & 2020
+      execSync('defaults write com.adobe.CSXS.10 PlayerDebugMode 1', { stdio: [0, 1, 2] }); // CC 2021
+      execSync('defaults write com.adobe.CSXS.11 PlayerDebugMode 1', { stdio: [0, 1, 2] }); // CC 2021
+      execSync('defaults write com.adobe.CSXS.12 PlayerDebugMode 1', { stdio: [0, 1, 2] }); // CC 2021
     }
   } catch (err) {
     utils.log_error(err);
@@ -104,7 +107,7 @@ function deployDevMode() {
   try {
     var type = isWindows ? 'junction' : 'dir';
 
-    fs.symlinkSync(DIST_FOLDER, resolvedTargetFolder, type);
+    fs.symlinkSync(DIST_EXTENSION_FOLDER, resolvedTargetFolder, type);
   } catch (err) {
     utils.log_error(err);
   }
@@ -117,7 +120,7 @@ function deployDevMode() {
 function deployProdMode() {
   utils.log_progress('[info]: copying into extensions folder\n');
   try {
-    utils.copyRecursiveSync(DIST_FOLDER, resolvedTargetFolder);
+    utils.copyRecursiveSync(DIST_EXTENSION_FOLDER, resolvedTargetFolder);
   } catch (err) {
     utils.log_error(err);
   }

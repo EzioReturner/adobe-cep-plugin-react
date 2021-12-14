@@ -28,12 +28,12 @@ const useDll = original.includes('--dll');
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
-const DIST_FOLDER = paths.distFolder;
-
 const DIST_CLIENT_FOLDER = paths.distClientFolder;
 
+const APP_BUILD_DIST = paths.appBuildDist;
+
 // build app
-rm(DIST_FOLDER, async function (err) {
+rm(APP_BUILD_DIST, async function (err) {
   if (err) throw err;
   measureFileSizesBeforeBuild(DIST_CLIENT_FOLDER).then(async previousFileSizes => {
     buildDll()
