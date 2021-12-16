@@ -21,43 +21,20 @@ and with support for extendscript (host app). It is built in a semi opinionated
 way so you can focus on writing your great extensions.
 
 
-### 有哪些改动？
+### what changes? / 有哪些改动？
 - 移除原项目中的 `session` 文件夹，通过 `client/bridge` 作为 ps 通信桥梁。
 
 - 使用 `typescript` 增强代码鲁棒性。
 
 - 调整原项目的本地编译与打包代码，增加 `watch` 指令，方便与ps调试。
 
-#### how to build
-first run `npm  install`, then choose  
-- `npm run build:dev` / `npm run build:prod` - will build into `./dist` folder
-- `npm run deploy:dev` / `npm run deploy:prod` - will deploy `./dist` folder into the extension folder.
-if in dev mode, it will create a **symbolic link**, otherwise it will copy the entire folder.
-- `npm run archive` will create a self signed certificate and sign a **ZXP** package ready to publish
-- `npm run release:dev` / `npm run release:prod` - will build, deploy and archive (in production)
+### 本地开发
+- `yarn watch` 将自动打包并生成link文件至 `cep/extensions/` 路径下，同时 watch 项目文件变化，对于非 client 文件夹下的新建删除文件操作，需重新执行 watch。
+- 在 `.debug.template.js` 中调整浏览器端口，默认为 7001，在应用程序中加载插件之后，通过浏览器访问对应端口即可调试，如：http://localhost:`PORT`。
 
-the output is a `./dist` extension folder
-```
-dist
-    com.package.name/
-        index.html
-        .debug
-        CSXS/
-            manifest.xml
-        icons/
-            favicon.ico    
-        node_modules/
-        host/
-            index.js
-        client-dist/
-            bundle.js
-            main.css
-        session-dist/
-            bundle.js
-        host/
-        libs/
-            CSInterface.js
-```
+
+### 如何打包
+- `yarn release:prod` 将重新构建打包项目，并读取 `./pluginrc.js` 文件配置对插件进行签名，最终输出对应的 .zxp 文件。
 
 #### how to customize
 start with `./pluginrc.js`, this is the plugin config I created, here is an example
@@ -92,68 +69,7 @@ module.exports = {
   }
 };
 ```
-when build is happening, then the build will pickup your package id and panel name
-and other configurations from this file and will use it against a template that will
-generate the `./dist/CSXS/manifest.xml` and `.debug` (in dev mode) file for you.
-also, I added support for a custom certificate and for a self-signed certificate.  
-feel free to modify the contents of the `assets` folder for you own need.
 
-#### how to debug
-debugging is achieved through the chrome debugger
-- release a dev build with `npm run release:dev`
-- inside Adobe, open the extension, you may have to restart if this is the first time.
-- open a browser at the following location http://localhost:`PORT`/ (See port number in .debug file)
 
-### what does this include ?
-this bootstrap is composed of three parts
-
-#### Front end side
-inside `src/client` you have the entry point for creating ReactJS application.
-installing modules is against the project root, see `/project.json`.  
-a nice feature, that it has is that you can use `webpack-dev-server` to see
-your UI results with watching at the browser, simply use:
-- `npm start` or
-- `npm run client:dev-server`
-this will generate the template html for you and run it in your browser,
-and will rebuild on code changes which is nice to have.
-
-#### ExtendScript side
-inside `src/host`, you will put you `jsx` files, by default I will load `index.jsx`,
-but I highly advise to use the `bridge` to load a `jsx` file dynamically so it can pick
-up it's `#include` dependencies otherwise it won't (this is a known issue)
-
-#### Webpack side
-so why am I using **Webpack** ?  
-without webpack, you will have to require modules by absolute path, which is not nice,
-also I wanted to enjoy a better ES6 syntax.
-
-#### Build scripts
-inside `/scripts`, you will find the webpack configs and also the build and deploy
-scripts. They use no-fancy node modules to keep things simple (no libs like Gulp).
-
-you can find:  
-- `/script/build.js development/production` this will build the entire thing
-- `/script/deploy.js development/production` this will deploy the entire thing into
-the adobe extensions folder in debug mode currently, I still need to sign the extension
-- `/script/archive.js` this will archive the distribution in **ZXP** format, ready to be published
-
-#### FAQ
-**Q:** how do I add more web development modules (like redux) ?  
-**A:** simply `npm install redux` from the root `./` directory  
-
-**Q:** how do I add some js lib without npm ?  
-**A:** simply edit `./src/index.html`  
-
-**Q:** how do I add some extendscript files ?  
-**A:** you must add them to `./src/host/` folder and then you have two choices. one, is to edit
-`./assets/CSXS/manifest.xml` file to declare them, or load them at runtime dynamically (better, you can read
-    about it more later)
-
-#### How to install
-- for dev mode with chrome debugging, simply `npm run release:dev`
-- for prod mode with **zxp** signed package, simply `npm run release:prod`, to install the zxp package,
-i advise the following resource:
-    - http://install.anastasiy.com/
-    - http://zxpinstaller.com/
-    - https://github.com/Adobe-CEP/Getting-Started-guides/tree/master/Package%20Distribute%20Install
-    - http://uberplugins.cc/help/how-to-install-photoshop-extension/
+### 更多信息，请参考
+https://github.com/HendrixString/adobe-cep-react-create

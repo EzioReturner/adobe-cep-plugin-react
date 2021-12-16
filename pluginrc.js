@@ -6,10 +6,10 @@ const certPath = path.join(destFolder, 'cert.p12');
 module.exports = {
   extensionBundleId: 'com.react.adobe.plugin',
   extensionBundleName: 'react.adobe.plugin',
-  extensionBundleVersion: '1.0.1',
-  cepVersion: '7.0',
+  extensionBundleVersion: '1.1.1',
+  cepVersion: '8.0',
   panelName: 'react-adobe-plugin',
-  width: '50',
+  width: '450',
   height: '650',
   root: root,
   sourceFolder: srcFolder,
